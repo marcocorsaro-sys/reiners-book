@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Reiner's Book</title>
+<meta name="description" content="Manuale interattivo di Reining: manovre, giudizio NRHA, i 20 pattern ufficiali disegnati passo per passo, quiz e classifica dei cavalieri.">
+<meta name="theme-color" content="#0e0b09">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230e0b09'/%3E%3Ccircle cx='11' cy='16' r='7' fill='none' stroke='%23c9a24d' stroke-width='2'/%3E%3Ccircle cx='21' cy='16' r='7' fill='none' stroke='%23c9a24d' stroke-width='2'/%3E%3C/svg%3E">
+</head>
+<body>
+<div class="shell">
+<aside class="rail">
+  <div class="brand">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Reiner's<br><em>Book</em></span>
+    <span class="brand-sub">NRHA Pattern Book 2026</span>
+  </div>
+  <nav id="nav">
+    <button data-v="home" class="on"><span class="num">I</span>Home</button>
+    <button data-v="man"><span class="num">II</span>Manovre</button>
+    <button data-v="rein"><span class="num">III</span>Giudizio</button>
+    <button data-v="pat"><span class="num">IV</span>Pattern</button>
+    <button data-v="quiz"><span class="num">V</span>Quiz</button>
+    <button data-v="board"><span class="num">VI</span>Classifica</button>
+  </nav>
+  <div class="rider" id="rider-box">
+    <div class="rider-name" id="rider-name">Ospite</div>
+    <div class="rider-horse" id="rider-horse">progressi solo su questo dispositivo</div>
+    <button class="btn small" id="rider-btn">Accedi</button>
+  </div>
+</aside>
+
+<main>
+<!-- HOME -->
+<section class="view on" id="v-home">
+  <div class="hero">
+    <div class="hero-text">
+      <div class="eyebrow">Manuale interattivo · Reining</div>
+      <h1>Il pattern si vince<br><em>nella testa,</em> prima che in arena</h1>
+      <p class="lead">Le otto manovre, il metro del giudice, i 18 pattern NRHA e i 2 Short Stirrup disegnati manovra per manovra, un quiz per fissare le penalità e una classifica condivisa per chi si allena con te.</p>
+      <div class="ctl"><button class="btn primary" data-go="pat">Apri i pattern</button><button class="btn" data-go="man">Studia le manovre</button></div>
+    </div>
+    <div class="hero-art"><svg viewBox="0 0 320 520" id="svg-hero" aria-hidden="true"></svg></div>
+  </div>
+  <div class="stats" id="stats">
+    <div class="stat"><div class="stat-n" id="k-man">0</div><div class="stat-l">manovre studiate</div></div>
+    <div class="stat"><div class="stat-n" id="k-pat">0</div><div class="stat-l">pattern letti / 20</div></div>
+    <div class="stat"><div class="stat-n" id="k-quiz">—</div><div class="stat-l">miglior quiz / 12</div></div>
+    <div class="stat"><div class="stat-n" id="k-rank">—</div><div class="stat-l">posizione in classifica</div></div>
+  </div>
+  <h2>Come usarlo</h2>
+  <div class="steps">
+    <div><b>Manovre</b> — stop, backup, rollback, spin, circles, lead change, rundown, hesitate: meccanica, aiuti, progressione e cosa guarda il giudice.</div>
+    <div><b>Giudizio</b> — scala da −1½ a +1½, tabella penalità completa, equipaggiamento ammesso.</div>
+    <div><b>Pattern</b> — scegli un pattern, clicca una manovra: la vedi evidenziata nell'arena. Segna i pattern che sai a memoria.</div>
+    <div><b>Quiz</b> — 12 domande casuali; ogni risultato va in classifica.</div>
+    <div><b>Accedi</b> con nome e PIN per ritrovare i progressi su ogni dispositivo e comparire in classifica.</div>
+  </div>
+  <div class="foot">Fonte: NRHA Handbook &amp; Pattern Book 2026 (pattern 1–18, A, B). "The following patterns are to be worked as stated, not as drawn": i disegni sono schematici, fa fede il testo. Illustrazioni originali.</div>
+</section>
+
+<!-- MANOVRE -->
+<section class="view" id="v-man">
+  <div class="eyebrow">Capitolo II</div>
+  <h1>Le manovre</h1>
+  <p class="lead">Ogni manovra ha una meccanica (cosa fa il cavallo), degli aiuti (cosa fai tu) e una progressione (come si insegna). Il giudice le valuta una per una da −1½ a +1½.</p>
+  <div id="man-list" class="stack"></div>
+</section>
+
+<!-- GIUDIZIO -->
+<section class="view" id="v-rein">
+  <div class="eyebrow">Capitolo III</div>
+  <h1>Come giudica il giudice</h1>
+  <blockquote>"To rein a horse is not only to guide him, but also to control his every movement. The best reined horse should be willingly guided or controlled with little or no apparent resistance and dictated to completely."<cite>NRHA Handbook, Rules for Judging</cite></blockquote>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">70</div><div class="stat-l">punteggio base (average)</div></div>
+    <div class="stat"><div class="stat-n">±1½</div><div class="stat-l">range per manovra</div></div>
+    <div class="stat"><div class="stat-n">0</div><div class="stat-l">score se off pattern</div></div>
+  </div>
+  <h2>Scala di manovra</h2>
+  <div class="tbl"><table>
+    <tr><th>Score</th><th>Giudizio</th><th>Significato</th></tr>
+    <tr><td>+1½</td><td>Excellent</td><td>Corretta, con altissimo grado di difficoltà, velocità e finesse</td></tr>
+    <tr><td>+1</td><td>Very good</td><td>Corretta con grado di difficoltà elevato</td></tr>
+    <tr><td>+½</td><td>Good</td><td>Corretta, sopra la media</td></tr>
+    <tr><td>0</td><td>Correct</td><td>Nessun errore, nessun merito particolare</td></tr>
+    <tr><td>−½</td><td>Poor</td><td>Piccola imprecisione</td></tr>
+    <tr><td>−1</td><td>Very poor</td><td>Errore evidente</td></tr>
+    <tr><td>−1½</td><td>Extremely poor</td><td>Manovra sostanzialmente non eseguita, ma pattern rispettato</td></tr>
+  </table></div>
+  <h2>Penalità</h2>
+  <div class="tbl"><table>
+    <tr><th>Punti</th><th>Infrazione</th></tr>
+    <tr><td class="pen0">0 score</td><td>Pattern non eseguito come scritto (off pattern) · più di ¼ di spin in più o in meno · due mani con curb bit · caduta cavallo/cavaliere · equipaggiamento non conforme · rifiuto di eseguire una manovra</td></tr>
+    <tr><td>5</td><td>Speronare davanti al cinch · toccare la sella con la mano libera · usare la mano libera per istruire il cavallo · abuso evidente</td></tr>
+    <tr><td>2</td><td>Break of gait · freeze up in spin o rollback · jog per più di mezza circle o mezza lunghezza · stop iniziale prima del center marker nei pattern che partono con il rundown</td></tr>
+    <tr><td>1</td><td>Fuori lead per un quarto di circle o per ogni quarto di rundown · over/under-spin di ⅛ · cambiare mano sulle redini</td></tr>
+    <tr><td>½</td><td>Ritardo nel cambio di galoppo di un passo · fuori lead per meno di ¼ di circle · over/under-spin fino a ⅛ · jog fino a 2 passi · toccare le staffe con la mano libera</td></tr>
+  </table></div>
+  <div class="note">Stop + backup si giudicano come una manovra sola. "Hesitate" dopo ogni gruppo di spin e a fine pattern: la pausa dimostra il controllo; saltarla è un difetto di manovra.</div>
+  <h2>Anatomia di un pattern</h2>
+  <p>Ogni pattern combina gli stessi blocchi in ordine diverso: <span class="term">circles</span> (3 per lato, combinazioni large fast / small slow), <span class="term">lead change</span> al centro, <span class="term">rundown</span> (al centro, oltre l'end marker) o <span class="term">run-around</span> (lungo il lato, ad almeno 6 m dal muro, oltre il center marker), <span class="term">rollback</span> senza esitazione, <span class="term">sliding stop</span>, <span class="term">backup</span> (almeno 3 m o fino al centro), <span class="term">spins</span> (4 o 4¼ per lato). I marker: uno al centro, due ad almeno 15 m dai fondi.</p>
+  <h2>Equipaggiamento NRHA</h2>
+  <ul>
+    <li>Cavalli di 6 anni e oltre: <b>curb bit</b> a una mano (fino a 5 anni: anche snaffle o hackamore a due mani).</li>
+    <li>Split reins o romal; un dito tra le redini ammesso con le split. Mano sopra il corno, senza cambiare mano.</li>
+    <li>Vietati: tie-down, martingale, cavezzoni, noseband con curb bit, speroni a rotella tagliente, redini "gag" non conformi.</li>
+    <li>Sella western, chaps lunghi, camicia a maniche lunghe, cappello western o casco.</li>
+  </ul>
+</section>
+
+<!-- PATTERN -->
+<section class="view" id="v-pat">
+  <div class="eyebrow">Capitolo IV · NRHA Pattern Book 2026</div>
+  <h1>I pattern</h1>
+  <p class="lead">Seleziona un pattern e clicca una manovra per vederla evidenziata nell'arena. Il fondo del disegno è l'in-gate. Linea piena = large &amp; fast, tratteggiata = small &amp; slow.</p>
+  <div class="pchips" id="pchips"></div>
+  <div class="pv">
+    <div class="sticky">
+      <div class="fig"><svg viewBox="0 0 320 520" id="svg-pat" aria-label="Arena pattern"></svg>
+        <div class="legend"><span><i></i>large / fast</span><span><i class="dash"></i>small / slow</span><span><i class="dim"></i>altre manovre</span></div>
+      </div>
+      <div class="ctl">
+        <button class="btn" id="p-prev">◀</button>
+        <button class="btn" id="p-next">▶</button>
+        <button class="btn" id="p-all">Tutto</button>
+        <button class="btn primary" id="p-read">Lo so a memoria</button>
+      </div>
+    </div>
+    <div>
+      <div class="p-head"><span class="p-num" id="p-num">1</span><div><div class="eyebrow" id="p-title"></div><p class="lead small" id="p-start"></p></div></div>
+      <div class="mlist" id="p-steps"></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="view" id="v-quiz">
+  <div class="eyebrow">Capitolo V</div>
+  <h1>Quiz</h1>
+  <p class="lead">12 domande casuali su manovre, penalità e pattern. Il risultato va in classifica se hai fatto l'accesso.</p>
+  <div class="two">
+    <div class="q" id="quiz-box">
+      <div class="q-top"><span class="pill" id="q-count">—</span><span class="pill" id="q-score">0 pt</span></div>
+      <div class="bar"><i id="q-bar"></i></div>
+      <div id="q-body"><button class="btn primary" id="q-start">Inizia il quiz</button></div>
+    </div>
+    <div class="card">
+      <h3>Il tuo record</h3>
+      <div class="stat-n" id="q-best">—</div>
+      <h3 class="mt">Progresso</h3>
+      <div id="q-prog"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSIFICA -->
+<section class="view" id="v-board">
+  <div class="eyebrow">Capitolo VI</div>
+  <h1>Classifica</h1>
+  <p class="lead">Tutti i cavalieri registrati, ordinati per miglior quiz, poi pattern e manovre studiate.</p>
+  <div class="tbl"><table id="board"><tr><th>#</th><th>Cavaliere</th><th>Cavallo</th><th>Quiz</th><th>Pattern</th><th>Manovre</th><th>Partite</th></tr></table></div>
+  <div class="note" id="board-note"></div>
+</section>
+</main>
+</div>
+
+<!-- LOGIN -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-card">
+    <div class="eyebrow">Cavaliere</div>
+    <h2 class="mt0">Accedi o registrati</h2>
+    <p class="lead small">Nome e PIN a 4 cifre. Se il nome non esiste viene creato. I progressi seguono il nome su ogni dispositivo.</p>
+    <form id="login-form">
+      <label>Nome <input id="l-name" required maxlength="40" autocomplete="username" placeholder="es. Marco"></label>
+      <label>PIN <input id="l-pin" required inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="current-password" type="password" placeholder="4 cifre"></label>
+      <label>Cavallo <input id="l-horse" maxlength="40" placeholder="opzionale"></label>
+      <div class="err" id="l-err"></div>
+      <div class="ctl"><button class="btn primary" type="submit">Entra</button><button class="btn" type="button" id="l-cancel">Annulla</button><button class="btn danger" type="button" id="l-logout" hidden>Esci</button></div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
