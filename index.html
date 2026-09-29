@@ -20,14 +20,15 @@
     <span class="brand-sub">NRHA Pattern Book 2026</span>
   </div>
   <nav id="nav">
-    <button data-v="home" class="on"><span class="num">I</span>Home</button>
-    <button data-v="man"><span class="num">II</span>Manovre</button>
-    <button data-v="rein"><span class="num">III</span>Giudizio</button>
-    <button data-v="pat"><span class="num">IV</span>Pattern</button>
-    <button data-v="quiz"><span class="num">V</span>Quiz</button>
-    <button data-v="board"><span class="num">VI</span>Classifica</button>
-    <button data-v="bit"><span class="num">VII</span>Morso</button>
-    <button data-v="score"><span class="num">VIII</span>Scorecard</button>
+    <button data-v="home" class="on"><span class="num"></span>Home</button>
+    <button data-v="cal"><span class="num">I</span>Calendario</button>
+    <button data-v="pat"><span class="num">II</span>Pattern</button>
+    <button data-v="bit"><span class="num">III</span>Morso</button>
+    <button data-v="man"><span class="num">IV</span>Manovre</button>
+    <button data-v="rein"><span class="num">V</span>Giudizio</button>
+    <button data-v="score"><span class="num">VI</span>Scorecard</button>
+    <button data-v="quiz"><span class="num">VII</span>Quiz</button>
+    <button data-v="board"><span class="num">VIII</span>Classifica</button>
   </nav>
   <div class="rider" id="rider-box">
     <div class="rider-name" id="rider-name">Ospite</div>
@@ -44,7 +45,7 @@
       <div class="eyebrow">Manuale interattivo · Reining</div>
       <h1>Il pattern si vince<br><em>nella testa,</em> prima che in arena</h1>
       <p class="lead">Le otto manovre, il metro del giudice, i 18 pattern NRHA e i 2 Short Stirrup disegnati manovra per manovra, un quiz per fissare le penalità e una classifica condivisa per chi si allena con te.</p>
-      <div class="ctl"><button class="btn primary" data-go="pat">Apri i pattern</button><button class="btn" data-go="man">Studia le manovre</button></div>
+      <div class="ctl"><button class="btn primary" data-go="cal">Prossime gare</button><button class="btn" data-go="pat">Apri i pattern</button><button class="btn" data-go="bit">Controlla il morso</button></div>
     </div>
     <div class="hero-art"><svg viewBox="0 0 320 520" id="svg-hero" aria-hidden="true"></svg></div>
   </div>
@@ -56,9 +57,12 @@
   </div>
   <h2>Come usarlo</h2>
   <div class="steps">
+    <div><b>Calendario</b> — tutte le gare di reining della stagione, in Italia e in Europa: filtri per paese e tipo, promemoria nel tuo calendario, aggiornamento ogni notte.</div>
+    <div><b>Pattern</b> — scegli un pattern, clicca una manovra: la vedi evidenziata nell'arena, con il video di un run o di una spiegazione. Segna i pattern che sai a memoria.</div>
+    <div><b>Morso</b> — verifica se il tuo morso è ammesso (NRHA/IRHA, OPES/ISHA) e chiedi un parere da una foto.</div>
     <div><b>Manovre</b> — stop, backup, rollback, spin, circles, lead change, rundown, hesitate: meccanica, aiuti, progressione e cosa guarda il giudice.</div>
     <div><b>Giudizio</b> — scala da −1½ a +1½, tabella penalità completa, equipaggiamento ammesso.</div>
-    <div><b>Pattern</b> — scegli un pattern, clicca una manovra: la vedi evidenziata nell'arena. Segna i pattern che sai a memoria.</div>
+    <div><b>Scorecard</b> — segui un cavaliere dagli spalti, dai i tuoi voti e confrontali con quelli dei giudici.</div>
     <div><b>Quiz</b> — 12 domande casuali; ogni risultato va in classifica.</div>
     <div><b>Accedi</b> con nome e PIN per ritrovare i progressi su ogni dispositivo e comparire in classifica.</div>
   </div>
@@ -67,7 +71,7 @@
 
 <!-- MANOVRE -->
 <section class="view" id="v-man">
-  <div class="eyebrow">Capitolo II</div>
+  <div class="eyebrow">Capitolo IV</div>
   <h1>Le manovre</h1>
   <p class="lead">Ogni manovra ha una meccanica (cosa fa il cavallo), degli aiuti (cosa fai tu) e una progressione (come si insegna). Il giudice le valuta una per una da −1½ a +1½.</p>
   <div id="man-list" class="stack"></div>
@@ -75,7 +79,7 @@
 
 <!-- GIUDIZIO -->
 <section class="view" id="v-rein">
-  <div class="eyebrow">Capitolo III</div>
+  <div class="eyebrow">Capitolo V</div>
   <h1>Come giudica il giudice</h1>
   <blockquote>"To rein a horse is not only to guide him, but also to control his every movement. The best reined horse should be willingly guided or controlled with little or no apparent resistance and dictated to completely."<cite>NRHA Handbook, Rules for Judging</cite></blockquote>
   <div class="stats">
@@ -118,7 +122,7 @@
 
 <!-- MORSO -->
 <section class="view" id="v-bit">
-  <div class="eyebrow">Capitolo VII</div>
+  <div class="eyebrow">Capitolo III</div>
   <h1>Il morso: è ammesso in gara?</h1>
   <p class="lead">Il controllo dell'imboccatura dopo il run fa parte della gara: un morso irregolare è <b>no score</b>. Qui trovi le misure regolamentari NRHA/IRHA, le regole OPES/ISHA per le gare nazionali, un verificatore guidato e la lettura di una foto del tuo morso.</p>
   <div class="stats">
@@ -195,7 +199,7 @@
 
 <!-- SCORECARD -->
 <section class="view" id="v-score">
-  <div class="eyebrow">Capitolo VIII</div>
+  <div class="eyebrow">Capitolo VI</div>
   <h1>Scorecard: giudica dagli spalti</h1>
   <p class="lead">Scegli il pattern del cavaliere che stai seguendo, vota ogni manovra mentre la vedi, aggiungi le penalità. Alla fine inserisci lo score ufficiale e scopri quanto sei vicino ai giudici.</p>
   <div class="sc-head">
@@ -222,7 +226,7 @@
 
 <!-- PATTERN -->
 <section class="view" id="v-pat">
-  <div class="eyebrow">Capitolo IV · NRHA Pattern Book 2026</div>
+  <div class="eyebrow">Capitolo II · NRHA Pattern Book 2026</div>
   <h1>I pattern</h1>
   <p class="lead">Seleziona un pattern e clicca una manovra per vederla evidenziata nell'arena. Il fondo del disegno è l'in-gate. Linea piena = large &amp; fast, tratteggiata = small &amp; slow.</p>
   <div class="pchips" id="pchips"></div>
@@ -247,7 +251,7 @@
 
 <!-- QUIZ -->
 <section class="view" id="v-quiz">
-  <div class="eyebrow">Capitolo V</div>
+  <div class="eyebrow">Capitolo VII</div>
   <h1>Quiz</h1>
   <p class="lead">12 domande casuali su manovre, penalità e pattern. Il risultato va in classifica se hai fatto l'accesso.</p>
   <div class="two">
@@ -267,7 +271,7 @@
 
 <!-- CLASSIFICA -->
 <section class="view" id="v-board">
-  <div class="eyebrow">Capitolo VI</div>
+  <div class="eyebrow">Capitolo VIII</div>
   <h1>Classifica</h1>
   <p class="lead">Tutti i cavalieri registrati, ordinati per miglior quiz, poi pattern e manovre studiate.</p>
   <div class="tbl"><table id="board"><tr><th>#</th><th>Cavaliere</th><th>Cavallo</th><th>Quiz</th><th>Pattern</th><th>Manovre</th><th>Partite</th></tr></table></div>

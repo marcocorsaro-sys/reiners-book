@@ -32,10 +32,9 @@
  @media(max-width:640px){.ev{grid-template-columns:1fr;gap:6px}.ev-a{flex-direction:row;flex-wrap:wrap;align-items:center;gap:14px}}`;
  document.head.appendChild(st);
 
- const btn=document.createElement('button');btn.dataset.v='cal';btn.innerHTML='<span class="num">IX</span>Calendario';nav.appendChild(btn);
  const sec=document.createElement('section');sec.className='view';sec.id='v-cal';
  sec.innerHTML=`
-  <div class="eyebrow">Capitolo IX · Stagione 2026</div>
+  <div class="eyebrow">Capitolo I · Stagione 2026</div>
   <h1>Calendario gare</h1>
   <p class="lead">Tutte le gare di reining in calendario su Showmanager, aggiornate automaticamente ogni notte. Filtra per paese, tipo e periodo, segui le tue con la stella e aggiungile al tuo calendario.</p>
   <div class="cal-top" id="c-top"></div>
