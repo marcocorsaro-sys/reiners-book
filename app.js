@@ -30,8 +30,8 @@ function save(){store.set('man',manDone);store.set('pat',patRead);store.set('bes
 
 /* ---------- nav ---------- */
 const nav=document.getElementById('nav');
-const VIEWS=['home','man','rein','pat','quiz','board'];
-function show(v){document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));nav.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));window.scrollTo({top:0});try{history.replaceState(null,'','#'+v)}catch(e){}if(v==='board')renderBoard()}
+const VIEWS=['home','man','rein','pat','quiz','board','bit','score'];
+function show(v){document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));nav.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));window.scrollTo({top:0});try{history.replaceState(null,'','#'+v)}catch(e){}if(v==='board')renderBoard();if(v==='score')loadHist()}
 nav.addEventListener('click',e=>{const b=e.target.closest('button');if(b)show(b.dataset.v)});
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
 const h0=(location.hash||'').slice(1);if(VIEWS.includes(h0))show(h0);
@@ -194,3 +194,97 @@ function kpis(){const m=Object.keys(manDone).length,p=Object.keys(patRead).lengt
 /* ---------- boot ---------- */
 buildMan();renderPat();riderUI();kpis();
 if(profile)DB.load().then(()=>{save();buildMan();renderPat();renderBoard()}).catch(()=>{});
+
+/* =================== MORSO =================== */
+(function(){const s=document.getElementById('svg-shank');if(!s)return;
+ const L={fill:'none',stroke:'#a89b85','stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round'};
+ s.appendChild(el('path',{...L,d:'M120 40 C 112 60,108 75,112 90 L 118 105 C 122 118,118 150,104 178'}));
+ s.appendChild(el('circle',{cx:120,cy:34,r:9,...L,'stroke-width':2.5}));s.appendChild(el('circle',{cx:102,cy:186,r:9,...L,'stroke-width':2.5}));
+ s.appendChild(el('path',{...L,'stroke-width':5,d:'M124 100 L 175 100 L 186 84 L 214 84 L 225 100 L 276 100'}));
+ s.appendChild(el('path',{...L,d:'M280 40 C 288 60,292 75,288 90 L 282 105 C 278 118,282 150,296 178'}));
+ s.appendChild(el('circle',{cx:280,cy:34,r:9,...L,'stroke-width':2.5}));s.appendChild(el('circle',{cx:298,cy:186,r:9,...L,'stroke-width':2.5}));
+ s.appendChild(el('path',{fill:'none',stroke:'#c9a24d','stroke-width':1.5,'stroke-dasharray':'4 3',d:'M60 34 L 60 186'}));
+ s.appendChild(el('path',{fill:'none',stroke:'#c9a24d','stroke-width':1.5,d:'M52 34 L 68 34 M52 186 L 68 186'}));
+ s.appendChild(el('text',{x:44,y:114,'text-anchor':'end',fill:'#c9a24d','font-size':'9'},'leva ≤ 21,6 cm'));
+ s.appendChild(el('text',{x:120,y:18,'text-anchor':'middle',fill:'#7d7263','font-size':'8'},'bridle ring'));
+ s.appendChild(el('text',{x:102,y:210,'text-anchor':'middle',fill:'#7d7263','font-size':'8'},'rein ring'));
+ s.appendChild(el('path',{fill:'none',stroke:'#c9a24d','stroke-width':1.5,'stroke-dasharray':'4 3',d:'M340 84 L 340 100 M332 84 L348 84 M332 100 L348 100'}));
+ s.appendChild(el('text',{x:352,y:96,fill:'#c9a24d','font-size':'9'},'ponte ≤ 8,9 cm'));
+ s.appendChild(el('text',{x:150,y:118,fill:'#c9a24d','font-size':'9'},'cannone ≥ 8 mm a 25 mm dalla guancia'));
+})();
+function bitCheck(){const g=id=>document.getElementById(id);const num=id=>{const v=parseFloat(g(id).value);return isNaN(v)?null:v};const chk=id=>g(id).checked;
+ const fed=g('b-fed').value,type=g('b-type').value,age=num('b-age');const ko=[],warn=[],ok=[];
+ const shankMax=fed==='nrha'?21.6:21.5,portMax=fed==='nrha'?8.9:9.0;
+ // type-level rules
+ if(type==='gag')ko.push(fed==='nrha'?'Gag / split bit: vietato in reining NRHA/IRHA.':'Gag / split: ammessi solo in barrel, pole e corse (OPES).');
+ if(type==='bitless')ko.push('Side pull, bitless, capezzine come imboccatura: vietati in reining.');
+ if(type==='mech')ko.push(fed==='nrha'?'Hackamore meccanico: vietato in reining NRHA/IRHA.':'Hackamore meccanico: solo gare di velocità, gimkana, team penning, ranch sorting (OPES).');
+ if(type==='snaffle'||type==='bosal'){if(age!==null&&age>=6)ko.push(fed==='nrha'?'Cavallo di 6 anni o più: in NRHA deve essere montato con curb bit a una mano.':'Cavallo di 6 anni o più: snaffle/bosal ammessi solo nelle classi che lo prevedono (avviamento, Level 1).');else ok.push('Snaffle/bosal ammesso per cavalli fino a 5 anni (due mani consentite).')}
+ if(type==='curb'){const sh=num('b-shank');if(sh===null)warn.push('Inserisci la lunghezza della leva.');else if(sh>shankMax)ko.push(`Leva ${sh} cm > max ${shankMax} cm.`);else ok.push(`Leva ${sh} cm entro il limite (${shankMax} cm).`);
+   const po=num('b-port');if(po!==null){if(po>portMax)ko.push(`Ponte ${po} cm > max ${portMax} cm.`);else ok.push(`Ponte ${po} cm entro il limite.`)}
+   if(chk('b-mech'))ko.push('Dispositivo meccanico / leva mobile: vietato.');
+   if(chk('b-chain')&&!chk('b-flat'))ko.push('Barbozzale a catena non piatto o intrecciato: irregolare.');else if(!chk('b-flat'))ko.push('Il barbozzale deve appoggiare piatto sotto la barbozza, senza intrecci.');
+   if(chk('b-wire'))ko.push('Barbozzale in filo di ferro, corda o catena singola: vietato.');
+   if(chk('b-hands')){if(fed==='nrha')ko.push('Curb bit a due mani: score 0 in NRHA.');else warn.push('Curb a due mani: ammesso solo in avviamento / Level 1 reining (OPES).')}
+   if(chk('b-romal'))ok.push('Romal: ammesse, mano chiusa, nessun dito tra le redini, mano libera ad almeno 40 cm.')}
+ if(type==='snaffle'){const r=num('b-ring');if(r!==null){if(fed==='nrha'&&(r<51||r>102))ko.push(`Anelli ${r} mm: fuori dal range 51–102 mm.`);else ok.push(`Anelli ${r} mm ok.`)}
+   const rt=num('b-ringt');if(rt!==null&&fed==='opes'&&rt>10)ko.push(`Spessore anelli ${rt} mm > 10 mm (OPES).`);
+   if(chk('b-chain'))ko.push('Barbozzale a catena sullo snaffle: vietato (solo cuoio, sotto le redini).');
+   if(chk('b-romal'))ko.push('Romal: solo con morso intero, non con snaffle.')}
+ if(type==='bosal'){const b=num('b-bosal');if(b!==null){if(b>19.5)ko.push(`Bosal ${b} mm > ¾" (19,5 mm) alla guancia.`);else ok.push(`Bosal ${b} mm ok.`)}}
+ if(type==='curb'||type==='snaffle'){const m=num('b-mouth');if(m===null)warn.push('Inserisci il diametro del cannone.');else if(m<8)ko.push(`Cannone ${m} mm < 8 mm minimo.`);else ok.push(`Cannone ${m} mm ok.`);
+   if(chk('b-twist'))ko.push('Cannone a torciglione, filo o non liscio: vietato.');
+   if(chk('b-below'))ko.push('Prolungamenti o parti che sporgono sotto il cannone: vietati.');
+   if(chk('b-donut'))ko.push('Donut, pronged, spade e simili: vietati.')}
+ if(chk('b-nose')){if(fed==='nrha')ko.push('Capezzina/noseband con il morso: vietata in NRHA.');else warn.push('Capezzina ammessa solo in corda/cuoio e dietro l\'imboccatura (OPES).')}
+ if(chk('b-tie'))ko.push(fed==='nrha'?'Tie-down / martingala: vietati in reining.':'Tie-down: solo velocità, penning, sorting; martingala solo con filetto in velocità/gimkana.');
+ if(chk('b-draw'))ko.push('Redini di ritorno / draw reins: vietate ovunque.');
+ const box=document.getElementById('bit-result');box.hidden=false;box.className='bit-result '+(ko.length?'ko':warn.length?'warn':'ok');
+ box.innerHTML=`<div class="verdict">${ko.length?'NON AMMESSO':warn.length?'DA VERIFICARE':'AMMESSO'}</div>${ko.length?'<ul>'+ko.map(x=>`<li>${x}</li>`).join('')+'</ul>':''}${warn.length?'<ul>'+warn.map(x=>`<li>${x}</li>`).join('')+'</ul>':''}${ok.length?'<ul style="color:var(--muted)">'+ok.map(x=>`<li>${x}</li>`).join('')+'</ul>':''}<p class="pill" style="margin-top:10px">Verifica orientativa su misure dichiarate. In caso di dubbio mostra il morso al giudice prima della giornata di gara.</p>`;}
+document.getElementById('bit-form').onsubmit=e=>{e.preventDefault();bitCheck()};
+document.getElementById('bit-form').onreset=()=>{document.getElementById('bit-result').hidden=true};
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=e=>{e.preventDefault();show(b.dataset.go)});
+/* photo */
+let photoData=null;
+document.getElementById('b-shoot').onclick=()=>document.getElementById('b-photo').click();
+document.getElementById('b-photo').onchange=e=>{const f=e.target.files[0];if(!f)return;const img=new Image();const url=URL.createObjectURL(f);img.onload=()=>{const max=1400;const k=Math.min(1,max/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);photoData=c.toDataURL('image/jpeg',.85);const pv=document.getElementById('b-preview');pv.src=photoData;pv.hidden=false;document.getElementById('b-analyze').hidden=false;document.getElementById('b-ai').hidden=true;URL.revokeObjectURL(url)};img.src=url};
+document.getElementById('b-analyze').onclick=async()=>{if(!photoData)return;const box=document.getElementById('b-ai');box.hidden=false;box.className='bit-result';box.innerHTML='<div class="pill">Analisi in corso…</div>';
+ const ctx={fed:document.getElementById('b-fed').value,type:document.getElementById('b-type').value,age:document.getElementById('b-age').value};
+ try{const r=await fetch('/api/bit-check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:photoData,ctx})});const j=await r.json();
+  if(!r.ok)throw new Error(j.error||('HTTP '+r.status));
+  box.className='bit-result '+(j.verdict==='ok'?'ok':j.verdict==='ko'?'ko':'warn');
+  box.innerHTML=`<div class="verdict">${j.verdict==='ok'?'PROBABILMENTE AMMESSO':j.verdict==='ko'?'PROBABILMENTE NON AMMESSO':'DA VERIFICARE'}</div><div class="ai-md">${(j.text||'').split('\n').filter(Boolean).map(l=>`<p>${esc(l)}</p>`).join('')}</div><p class="pill" style="margin-top:8px">Parere automatico su foto: non sostituisce la misura con il righello né il controllo del giudice.</p>`}
+ catch(ex){box.className='bit-result warn';box.innerHTML=`<div class="verdict">NON DISPONIBILE</div><p>${esc(ex.message)}</p><p class="pill">Usa intanto il verificatore guidato con le misure prese col righello.</p>`}};
+
+/* =================== SCORECARD =================== */
+const SCORES=[-1.5,-1,-0.5,0,0.5,1,1.5];const PENS=[0.5,1,2,5];
+let sc={pat:0,m:[]};
+function fmt(n){return (n>0?'+':'')+(Number.isInteger(n)?n:n.toFixed(1)).toString().replace('.5','½').replace('+0','0')}
+function fmtS(n){const s=n<0?'−':n>0?'+':'';const a=Math.abs(n);return s+(a===Math.floor(a)?a:Math.floor(a)+'½').toString().replace(/^0½$/,'½')}
+function scInit(){sc={pat:+document.getElementById('s-pat').value,m:P[+document.getElementById('s-pat').value].steps.map(()=>({score:null,pens:[]}))};document.getElementById('s-cmp').hidden=true;document.getElementById('s-judge').value='';scRender()}
+function scTotals(){let ms=0,ps=0,zero=false;sc.m.forEach(x=>{if(x.score!==null)ms+=x.score;x.pens.forEach(p=>{if(p===0)zero=true;else ps+=p})});return{ms,ps,zero,total:zero?0:70+ms-ps}}
+function scRender(){const p=P[sc.pat];const box=document.getElementById('s-list');
+ box.innerHTML=p.steps.map((st,i)=>{const m=sc.m[i];return `<div class="sc-row"><span class="n">${i+1}</span><div><div class="txt">${st[0]}<span class="en">${st[1]}</span></div>
+  <div class="scores">${SCORES.map(v=>`<button data-i="${i}" data-s="${v}" class="${m.score===v?'on':''} ${v<0?'neg':''}">${fmtS(v)}</button>`).join('')}</div>
+  <div class="pens"><span class="lbl">Penalità</span>${PENS.map(v=>`<button data-i="${i}" data-p="${v}">+${fmtS(v).replace('+','')}</button>`).join('')}<button data-i="${i}" data-p="0" title="Score 0 / off pattern">0 score</button>${m.pens.map((v,k)=>`<span class="chip" data-i="${i}" data-k="${k}" title="rimuovi">${v===0?'0 SCORE':'−'+fmtS(v).replace('+','')} ×</span>`).join('')}</div></div></div>`}).join('');
+ const t=scTotals();document.getElementById('s-total').textContent=t.zero?'0':(t.total%1?t.total.toFixed(1):t.total);document.getElementById('s-man').textContent=fmtS(t.ms);document.getElementById('s-pen').textContent=t.ps?'−'+fmtS(t.ps).replace('+',''):'0'}
+document.getElementById('s-pat').innerHTML=P.map((p,i)=>`<option value="${i}">Pattern ${p.id}</option>`).join('');
+document.getElementById('s-pat').onchange=scInit;document.getElementById('s-reset').onclick=scInit;
+document.getElementById('s-list').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b)return;const i=+b.dataset.i;
+ if(b.dataset.s!==undefined){const v=+b.dataset.s;sc.m[i].score=sc.m[i].score===v?null:v}
+ else if(b.dataset.p!==undefined){sc.m[i].pens.push(+b.dataset.p)}
+ else if(b.dataset.k!==undefined){sc.m[i].pens.splice(+b.dataset.k,1)}
+ scRender()});
+document.getElementById('s-save').onclick=async()=>{const j=parseFloat(document.getElementById('s-judge').value);const t=scTotals();const box=document.getElementById('s-cmp');box.hidden=false;
+ if(isNaN(j)){box.className='bit-result warn';box.innerHTML='<div class="verdict">Inserisci lo score ufficiale</div>';return}
+ const d=t.total-j;const ad=Math.abs(d);const unrated=sc.m.filter(x=>x.score===null).length;
+ box.className='bit-result '+(ad<=0.5?'ok':ad<=1.5?'warn':'ko');
+ box.innerHTML=`<div class="verdict">${ad===0?'Occhio da giudice':ad<=0.5?'Quasi identico':ad<=1.5?'Vicino':'Lontano'} · Δ ${d>0?'+':''}${d%1?d.toFixed(1):d}</div><p>Tu ${t.total%1?t.total.toFixed(1):t.total} · giudici ${j}. ${d>0?'Sei stato più generoso dei giudici':d<0?'Sei stato più severo dei giudici':'Stesso score'}${unrated?` · ${unrated} manovre senza voto contate come 0`:''}.</p>`;
+ if(!sb)return;const row={profile_id:profile?profile.id:null,event:document.getElementById('s-event').value||null,rider:document.getElementById('s-rider').value||null,horse:document.getElementById('s-horse').value||null,pattern:P[sc.pat].id,maneuvers:sc.m,my_total:t.total,judge_total:j,notes:document.getElementById('s-notes').value||null};
+ const {error}=await sb.from('qha_scorecards').insert(row);if(error){box.innerHTML+=`<p class="pill">Non salvato: ${esc(error.message)}</p>`}else{box.innerHTML+=`<p class="pill">${profile?'Salvato nel tuo storico.':'Salvato come ospite: accedi per ritrovarlo su altri dispositivi.'}</p>`;loadHist()}};
+async function loadHist(){const t=document.getElementById('s-hist');const note=document.getElementById('s-hist-note');if(!sb||!profile){note.textContent='Accedi per vedere lo storico dei tuoi run giudicati.';return}
+ const {data}=await sb.from('qha_scorecards').select('created_at,pattern,rider,my_total,judge_total').eq('profile_id',profile.id).order('created_at',{ascending:false}).limit(30);
+ t.querySelectorAll('tr:not(:first-child)').forEach(r=>r.remove());const rows=data||[];let sum=0,n=0;
+ rows.forEach(r=>{const d=r.judge_total!==null?r.my_total-r.judge_total:null;if(d!==null){sum+=Math.abs(d);n++}const tr=document.createElement('tr');tr.innerHTML=`<td>${new Date(r.created_at).toLocaleDateString('it-IT')}</td><td>${esc(r.pattern)}</td><td>${esc(r.rider||'—')}</td><td>${r.my_total}</td><td>${r.judge_total??'—'}</td><td style="color:${d===null?'inherit':Math.abs(d)<=0.5?'var(--brass2)':Math.abs(d)<=1.5?'var(--cream)':'var(--red)'}">${d===null?'—':(d>0?'+':'')+d}</td>`;t.appendChild(tr)});
+ note.textContent=rows.length?`${rows.length} run · scarto medio dai giudici: ${(n?sum/n:0).toFixed(2)} punti.`:'Nessun run ancora.'}
+scInit();

@@ -26,6 +26,8 @@
     <button data-v="pat"><span class="num">IV</span>Pattern</button>
     <button data-v="quiz"><span class="num">V</span>Quiz</button>
     <button data-v="board"><span class="num">VI</span>Classifica</button>
+    <button data-v="bit"><span class="num">VII</span>Morso</button>
+    <button data-v="score"><span class="num">VIII</span>Scorecard</button>
   </nav>
   <div class="rider" id="rider-box">
     <div class="rider-name" id="rider-name">Ospite</div>
@@ -98,8 +100,8 @@
     <tr><td class="pen0">0 score</td><td>Pattern non eseguito come scritto (off pattern) · più di ¼ di spin in più o in meno · due mani con curb bit · caduta cavallo/cavaliere · equipaggiamento non conforme · rifiuto di eseguire una manovra</td></tr>
     <tr><td>5</td><td>Speronare davanti al cinch · toccare la sella con la mano libera · usare la mano libera per istruire il cavallo · abuso evidente</td></tr>
     <tr><td>2</td><td>Break of gait · freeze up in spin o rollback · jog per più di mezza circle o mezza lunghezza · stop iniziale prima del center marker nei pattern che partono con il rundown</td></tr>
-    <tr><td>1</td><td>Fuori lead per un quarto di circle o per ogni quarto di rundown · over/under-spin di ⅛ · cambiare mano sulle redini</td></tr>
-    <tr><td>½</td><td>Ritardo nel cambio di galoppo di un passo · fuori lead per meno di ¼ di circle · over/under-spin fino a ⅛ · jog fino a 2 passi · toccare le staffe con la mano libera</td></tr>
+    <tr><td>1</td><td>Fuori lead per un quarto di circle o per ogni quarto di rundown · over/under-spin da ⅛ a ¼ di giro · cambiare mano sulle redini</td></tr>
+    <tr><td>½</td><td>Ritardo nel cambio di galoppo di un passo · fuori lead per meno di ¼ di circle · over/under-spin fino a ⅛ di giro · jog fino a 2 passi · toccare le staffe con la mano libera</td></tr>
   </table></div>
   <div class="note">Stop + backup si giudicano come una manovra sola. "Hesitate" dopo ogni gruppo di spin e a fine pattern: la pausa dimostra il controllo; saltarla è un difetto di manovra.</div>
   <h2>Anatomia di un pattern</h2>
@@ -110,7 +112,112 @@
     <li>Split reins o romal; un dito tra le redini ammesso con le split. Mano sopra il corno, senza cambiare mano.</li>
     <li>Vietati: tie-down, martingale, cavezzoni, noseband con curb bit, speroni a rotella tagliente, redini "gag" non conformi.</li>
     <li>Sella western, chaps lunghi, camicia a maniche lunghe, cappello western o casco.</li>
+    <li>Misure del morso (leve max 21,6 cm, cannone min 8 mm, ponte max 8,9 cm, anelli snaffle 51–102 mm): vedi il capitolo <a href="#bit" data-go="bit">Morso</a>, con verifica interattiva.</li>
   </ul>
+</section>
+
+<!-- MORSO -->
+<section class="view" id="v-bit">
+  <div class="eyebrow">Capitolo VII</div>
+  <h1>Il morso: è ammesso in gara?</h1>
+  <p class="lead">Il controllo dell'imboccatura dopo il run fa parte della gara: un morso irregolare è <b>no score</b>. Qui trovi le misure regolamentari NRHA/IRHA, le regole OPES/ISHA per le gare nazionali, un verificatore guidato e la lettura di una foto del tuo morso.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">21,6<small class="unit">cm</small></div><div class="stat-l">leva max (8½")</div></div>
+    <div class="stat"><div class="stat-n">8<small class="unit">mm</small></div><div class="stat-l">cannone min (5/16")</div></div>
+    <div class="stat"><div class="stat-n">8,9<small class="unit">cm</small></div><div class="stat-l">ponte max (3½")</div></div>
+    <div class="stat"><div class="stat-n">51–102<small class="unit">mm</small></div><div class="stat-l">anelli snaffle (2"–4")</div></div>
+  </div>
+  <div class="two" style="margin-top:22px">
+    <div>
+      <h2 class="mt0">Verificatore guidato</h2>
+      <form id="bit-form" class="bitform">
+        <label>Federazione / regolamento
+          <select id="b-fed"><option value="nrha">NRHA / IRHA (Reining)</option><option value="opes">OPES / ISHA – prontuario 2025</option></select></label>
+        <label>Tipo di imboccatura
+          <select id="b-type"><option value="curb">Morso a leve (curb / shanked bit)</option><option value="snaffle">Filetto (snaffle)</option><option value="bosal">Hackamore / bosal</option><option value="mech">Hackamore meccanico</option><option value="gag">Gag / split bit</option><option value="bitless">Side pull / bitless / capezzina</option></select></label>
+        <label>Età del cavallo <input id="b-age" type="number" min="2" max="30" placeholder="anni"></label>
+        <div class="grid3">
+          <label>Leva (bridle ring → rein ring) <input id="b-shank" type="number" step="0.1" placeholder="cm"></label>
+          <label>Diametro cannone a 25 mm dalla guancia <input id="b-mouth" type="number" step="0.5" placeholder="mm"></label>
+          <label>Altezza ponte (port) <input id="b-port" type="number" step="0.1" placeholder="cm"></label>
+          <label>Diametro anelli (snaffle) <input id="b-ring" type="number" step="1" placeholder="mm"></label>
+          <label>Spessore anelli (snaffle) <input id="b-ringt" type="number" step="0.5" placeholder="mm"></label>
+          <label>Diametro bosal alla guancia <input id="b-bosal" type="number" step="0.5" placeholder="mm"></label>
+        </div>
+        <h3 class="mt">Caratteristiche</h3>
+        <div class="checks">
+          <label class="chk"><input type="checkbox" id="b-twist"> Cannone a torciglione, filo o non liscio</label>
+          <label class="chk"><input type="checkbox" id="b-below"> Qualcosa sporge sotto il cannone</label>
+          <label class="chk"><input type="checkbox" id="b-mech"> Dispositivo meccanico / leva mobile / gag sul curb</label>
+          <label class="chk"><input type="checkbox" id="b-donut"> Donut, pronged, spade o simili</label>
+          <label class="chk"><input type="checkbox" id="b-chain"> Barbozzale a catena</label>
+          <label class="chk"><input type="checkbox" id="b-flat" checked> Barbozzale piatto sotto la barbozza, non intrecciato</label>
+          <label class="chk"><input type="checkbox" id="b-wire"> Barbozzale in filo di ferro / corda / catena singola</label>
+          <label class="chk"><input type="checkbox" id="b-nose"> Capezzina / noseband insieme al morso</label>
+          <label class="chk"><input type="checkbox" id="b-tie"> Tie-down o martingala</label>
+          <label class="chk"><input type="checkbox" id="b-draw"> Redini di ritorno / draw reins</label>
+          <label class="chk"><input type="checkbox" id="b-hands"> Monta a due mani</label>
+          <label class="chk"><input type="checkbox" id="b-romal"> Redini romal</label>
+        </div>
+        <div class="ctl"><button class="btn primary" type="submit">Verifica</button><button class="btn" type="reset">Azzera</button></div>
+      </form>
+      <div id="bit-result" class="bit-result" hidden></div>
+    </div>
+    <div>
+      <h2 class="mt0">Parere da una foto</h2>
+      <p class="lead small">Fotografa il morso di profilo, su fondo chiaro, con un righello o una moneta accanto. Ricevi una lettura delle misure stimate e dei punti da controllare. È un parere orientativo: il giudizio finale è del giudice a fine run.</p>
+      <div class="photo-box">
+        <input type="file" id="b-photo" accept="image/*" capture="environment" hidden>
+        <button class="btn primary" id="b-shoot">Scatta / carica foto</button>
+        <img id="b-preview" alt="" hidden>
+        <div class="ctl"><button class="btn" id="b-analyze" hidden>Chiedi un parere</button></div>
+        <div id="b-ai" class="bit-result" hidden></div>
+      </div>
+      <h2>Come si misura la leva</h2>
+      <div class="fig"><svg viewBox="0 0 400 220" id="svg-shank" aria-label="Misura della leva"></svg><div class="cap">Dal punto di aggancio della testiera (bridle ring) al punto di attacco delle redini (rein ring), qualunque sia la forma della leva</div></div>
+    </div>
+  </div>
+  <h2>Regole a confronto</h2>
+  <div class="tbl"><table>
+    <tr><th>Voce</th><th>NRHA / IRHA (Reining)</th><th>OPES / ISHA 2025 (Western)</th></tr>
+    <tr><td>Leve</td><td>Max 8½" (21,6 cm) da bridle ring a rein ring; nessun dispositivo meccanico; nulla sotto il cannone</td><td>Max 21,5 cm; morso privo di dispositivi meccanici; vietato ogni prolungamento sotto il cannone</td></tr>
+    <tr><td>Cannone</td><td>Diametro min 5/16" (8 mm) a 1" dalla guancia, liscio, tondo/ovale; niente filo, torciglione o spigoli</td><td>Min 8 mm a 25 mm dalla guancia, liscio, assottigliato verso il centro; torciglione vietato</td></tr>
+    <tr><td>Ponte</td><td>Max 3½" (8,9 cm)</td><td>Max 9 cm</td></tr>
+    <tr><td>Snaffle</td><td>Anelli 2"–4" (51–102 mm); cavalli fino a 5 anni, due mani; curb strap in cuoio sotto le redini ammesso</td><td>Anelli max 10 mm di spessore; barbozzale in cuoio sotto le redini ammesso; catena mai</td></tr>
+    <tr><td>Barbozzale</td><td>Cuoio o catena, piatto, largo almeno ½", senza fili o nodi</td><td>Cuoio o catena piatti; vietati catena singola, filo di ferro, corda</td></tr>
+    <tr><td>Bosal / hackamore</td><td>Bosal flessibile in corda o cuoio, max ¾" (19 mm); cavalli fino a 5 anni</td><td>Bosal max ¾" (19,5 mm), no crine; hackamore meccanico solo gare di velocità / penning / sorting</td></tr>
+    <tr><td>Gag / split</td><td>Vietati</td><td>Solo barrel, pole, corse</td></tr>
+    <tr><td>Redini</td><td>Una mano, nessun cambio; split (un dito ammesso) o romal (niente dita)</td><td>Una mano; due mani ammesse in Level 1 / avviamento reining, gimkana, penning, sorting</td></tr>
+    <tr><td>Accessori</td><td>Vietati tie-down, martingale, draw reins, capezzine con morso; speroni a rotella non tagliente</td><td>Tie-down solo velocità/penning/sorting; redini di ritorno vietate ovunque; capezzine ammesse solo dietro l'imboccatura</td></tr>
+  </table></div>
+  <div class="note">Se hai un dubbio su un morso nuovo, mostralo al giudice <b>prima dell'inizio della giornata di gara</b>, non un attimo prima di entrare. Fonti: NRHA Handbook 2026, IRHA Rule Book 2026, OPES/ISHA Regolamento imboccature 2025, M. Penza "Misurare le leve del morso".</div>
+</section>
+
+<!-- SCORECARD -->
+<section class="view" id="v-score">
+  <div class="eyebrow">Capitolo VIII</div>
+  <h1>Scorecard: giudica dagli spalti</h1>
+  <p class="lead">Scegli il pattern del cavaliere che stai seguendo, vota ogni manovra mentre la vedi, aggiungi le penalità. Alla fine inserisci lo score ufficiale e scopri quanto sei vicino ai giudici.</p>
+  <div class="sc-head">
+    <label>Pattern <select id="s-pat"></select></label>
+    <label>Cavaliere <input id="s-rider" placeholder="opzionale"></label>
+    <label>Cavallo <input id="s-horse" placeholder="opzionale"></label>
+    <label>Gara / classe <input id="s-event" placeholder="opzionale"></label>
+  </div>
+  <div class="sc-total"><div><div class="stat-l">Il tuo score</div><div class="stat-n" id="s-total">70</div></div><div><div class="stat-l">Manovre</div><div class="stat-n small" id="s-man">0</div></div><div><div class="stat-l">Penalità</div><div class="stat-n small" id="s-pen">0</div></div><div class="ctl"><button class="btn" id="s-reset">Nuovo run</button></div></div>
+  <div id="s-list" class="sc-list"></div>
+  <div class="card" style="margin-top:16px">
+    <h3>Confronto con i giudici</h3>
+    <div class="sc-judge">
+      <label>Score ufficiale <input id="s-judge" type="number" step="0.5" min="0" max="90" placeholder="es. 71.5"></label>
+      <label>Note <input id="s-notes" placeholder="opzionale"></label>
+      <button class="btn primary" id="s-save">Confronta e salva</button>
+    </div>
+    <div id="s-cmp" class="bit-result" hidden></div>
+  </div>
+  <h2>I tuoi run giudicati</h2>
+  <div class="tbl"><table id="s-hist"><tr><th>Data</th><th>Pattern</th><th>Cavaliere</th><th>Tuo</th><th>Giudici</th><th>Δ</th></tr></table></div>
+  <div class="note" id="s-hist-note"></div>
 </section>
 
 <!-- PATTERN -->
