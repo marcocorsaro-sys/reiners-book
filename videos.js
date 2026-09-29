@@ -120,3 +120,63 @@ const MVIDEOS = {
  buildMan=function(){_buildMan();inject()};
  inject();
 })();
+const CAV = {
+ stop:[["4sAs78B_dz4","Putting a Good Stop on a Horse - Q&A","7:41"],["g0Qh-6VoCPc","Getting a Horse to Stop","3:54"],["B1KM7Huc_KA","Lessons Learned: A Horse's Walk Determines How Well They Stop","4:32"],["XPyH6Zy-P0c","Reining Mare is Stopping Hard on Her Front End - Q&A","4:21"],["n-uU-fw77qM","The better a horse backs up, the better he'll stop and collect","Short"],["hAsM5sMf0P0","One Rein Stops are your emergency brakes on your horse","Short"],["wU1pkwqvfeA","Give your horse a chance to read your seat before doing a One Rein Stop","Short"],["jHyKBtHWChM","You Must Teach the One Rein Stop to Your Horse in Order for it to Work","5:00"],["tBv2iXs8Zys","Ginger - Big Stopping Prospect","Short"]],
+ back:[["cj4vnwTfwVQ","Backing Up With Tulsi","17:34"],["ylxfzFOaaA0","Backing Up With Elon","14:17"],["WK9_6f5TNZg","Get your horse's steering going backward as good as it is going forward","3:20"],["PKfH0nKL2f8","Backing your horse up fixes problems like biting and pushy behavior","Short"],["OTXplcKkZ70","Practicing backing your horse in a circle will help him back a straight line better","Short"],["QSmaN9CBQPE","Backing Squares","Short"],["RPMUbbxTWZA","You always want your cow horses thinking: back and over","Short"]],
+ roll:[["szsqfo5NSxE","Training Tip: How Rollbacks on the Fence Can Improve Your Horse","15:30"],["j634g-bZsAA","Rollbacks on the Fence is one of the most beneficial exercises you can do with your horse","Short"],["Y6nhoUXhIrA","Professional Clinician Jeff Davis shares a rollback drill we use during training","Short"],["pVsOMQFmwfE","Rollbacks in the desert with Brownie","5:18"]],
+ spin:[["Dxlpnzp0Neo","The foundation of the turnaround","Short"],["jQCiHWBrJaA","Teaching the turnaround","Short"],["pCtpFtO5yi8","Teaching a horse to do a turnaround is about cadence, not speed","3:10"],["xWyAjXkcJX8","Focus on correctness before speed when teaching your horse to turn around","Short"],["Y9Qw9c-29sE","Use Turnarounds to Engage Your Horse on the Trail","2:12"],["D5P8BoDCjmY","Yield the Hindquarters Stage 1 - a key groundwork exercise for all horses","Short"],["88eTw0bNFqY","Yield the Hindquarters With Candace","21:48"],["jy_jXx-h0Gs","Refining Yield the Hindquarters With Elon","18:12"]],
+ circle:[["A4IoVoj5-ug","Training Tip: Teach Your Hot Horse to Lope Slowly","2:49"],["AhkSG27Os60","Loping Drills With Prada","10:26"],["aJxxuU9Ftug","Horse Bucks When Asked to Collect at the Canter","5:33"],["z8DKKxAKmH4","Flower Power is a great loping exercise to improve a horse's steering","Short"],["rjtxkiOHEI0","Practice loping to teach your horse to lope with cadence","Short"],["9Qt3QM5FBp0","Loping will improve your horse's walk","Short"],["szcuOeRucy0","Chaocco P cantering on a loose rein","Short"],["cBu5Hu2APzE","Counterbending is a great warm-up exercise to practice with your horse","Short"]],
+ lead:[["29byp89yQVc","Why we teach horses to do lead changes out of a countercanter","Short"],["zqOjLfaFrHA","If a horse can't do a correct lead departure, they won't be able to do a flying lead change either","Short"],["Iri8ySD-eYY","Doing a lead change should become second-nature to your horse","Short"],["8ykiC4X6Em4","The key to lead changes is body control","Short"],["ndugXhHZ5AA","Lead changes with Prada","Short"],["lDIK_5sRH8Q","Lessons Learned: Pay Attention to How Well a Horse Stays on the Correct Lead","2:06"],["8Vbm_0J7FLQ","The key to getting a horse to pick up the correct lead is being able to position their body","Short"]],
+ run:[["EwZQFDnaETo","Fencing and Rundowns With Prada","3:11"],["mlaFe8BofZg","Hustle the horse out of the turn onto the straight line","Short"],["oaL4qdVYytU","Chaocco P starting to rate himself approaching jumps at No Excuses Nation","Short"]],
+ hes:[["h7ASIc71b90","Ignore the distractions. Focus on you","Short"],["QqjevdaDUro","You can't train a horse that isn't paying attention to you","Short"],["bwnLaY7Qmds","Horse Won't Flex to the Halter","2:20"],["xDZnoRKKnoM","Hinging works on softening and suppling the horse's head and neck","Short"]],
+ found:[["D5P8BoDCjmY","Yield the Hindquarters Stage 1 - a key groundwork exercise for all horses","Short"],["nOF_Zev2QVc","Yielding a horse's hindquarters gives you control","Short"],["opFTxlooqvU","Jeff works on refining Yield the Forequarters with Elon","Short"],["43d3zE0JRVQ","Serpentines are a great exercise to work on suppling your horse's entire body","Short"],["0MMrPFMCWBg","Oil your horse's five body paets with suppling exercises every ride","Short"],["hMdsisphZn4","Two-Tracking is an important suppling and body-control exercise","Short"],["t4k9Eu_vG_s","An exercise for ribcage control","Short"],["23beiwFdk2U","Lunging for Respect Stage Two with a colt","Short"],["YmmG3Jd2AB0","Lunging for Respect, Stage 1 With Donald","38:55"],["aThx2L6ybrg","Get off my leg, stay soft in my hands","Short"],["cBu5Hu2APzE","Counterbending is a great warm-up exercise to practice with your horse","Short"]]
+};
+(function(){
+ const st=document.createElement('style');
+ st.textContent=`
+ .ca{margin:0 0 14px;border:1px solid var(--line);background:var(--ink2)}
+ .ca-h{padding:9px 10px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+ .ca-h small{display:block;margin-top:3px;letter-spacing:.04em;text-transform:none;color:var(--muted);font-family:var(--sans,inherit);font-size:12px}
+ .ca-stage{position:relative;aspect-ratio:16/9;background:#000;max-width:100%}
+ .ca-stage iframe,.ca-stage img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+ .ca-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(14,11,9,.35);border:0;cursor:pointer;padding:0}
+ .ca-play span{width:60px;height:60px;border-radius:50%;background:var(--brass);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:22px;padding-left:4px}
+ .ca-play:hover span{background:var(--brass2)}
+ .ca-now{padding:8px 10px;font-size:12.5px;color:var(--muted)}
+ .ca-now b{color:var(--cream);font-weight:500}
+ .ca-now a{font-family:var(--mono);font-size:11px}
+ .ca-list{display:flex;flex-direction:column;border-top:1px solid var(--line);max-height:260px;overflow:auto}
+ .ca-it{display:flex;gap:10px;align-items:center;text-align:left;padding:7px 10px;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--muted);cursor:pointer;font-size:12.5px}
+ .ca-it:hover{background:rgba(201,162,77,.07)}
+ .ca-it.on{color:var(--cream);background:rgba(201,162,77,.12)}
+ .ca-it .d{flex:none;min-width:44px;text-align:center;font-family:var(--mono);font-size:10.5px;padding:2px 5px;border:1px solid var(--line2);color:var(--brass)}
+ .ca-it .t{flex:1;min-width:0}`;
+ document.head.appendChild(st);
+ const list=document.getElementById('man-list'); if(!list||typeof MAN==='undefined')return;
+ const idx={};
+ const HEAD={found:['Fondamenta · Metodo Clinton Anderson','Esercizi a terra e in sella che preparano tutte le manovre: yield, suppling, lunge, controllo del corpo.']};
+ function draw(k){
+  const box=document.getElementById('ca-'+k); if(!box)return;
+  const vs=CAV[k]||[]; const i=idx[k]||0; const v=vs[i]; if(!v){box.remove();return}
+  const h=HEAD[k]||['Metodo Clinton Anderson','Dal canale Downunder Horsemanship: esercizi di base e lavoro per questa manovra. Approccio da cow horse/performance horse, non regolamento NRHA.'];
+  box.innerHTML=`<div class="ca-h">${esc(h[0])}<small>${esc(h[1])}</small></div>
+  <div class="ca-stage"><img src="https://i.ytimg.com/vi/${v[0]}/hqdefault.jpg" alt="" loading="lazy"><button class="ca-play" aria-label="Riproduci video"><span>▶</span></button></div>
+  <div class="ca-now"><b>${esc(v[1])}</b> · DUHorseman · <a href="https://www.youtube.com/watch?v=${v[0]}" target="_blank" rel="noopener">apri su YouTube</a></div>
+  <div class="ca-list">${vs.map((x,j)=>`<button class="ca-it ${j===i?'on':''}" data-k="${k}" data-i="${j}"><span class="d">${esc(x[2])}</span><span class="t">${esc(x[1])}</span></button>`).join('')}</div>`;
+  box.querySelector('.ca-play').onclick=()=>{box.querySelector('.ca-stage').innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${v[0]}?autoplay=1&rel=0" title="${esc(v[1])}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`};
+ }
+ function mk(k){const b=document.createElement('div');b.className='ca';b.id='ca-'+k;return b}
+ function inject(){
+  if((CAV.found||[]).length&&!document.getElementById('ca-found')){list.insertBefore(mk('found'),list.firstChild);draw('found')}
+  MAN.forEach(m=>{
+   const card=document.getElementById('man-'+m.k); if(!card||document.getElementById('ca-'+m.k))return;
+   if(!(CAV[m.k]||[]).length)return;
+   const box=mk(m.k); const prev=document.getElementById('mv-'+m.k)||card.querySelector('.man-head');
+   prev.parentNode.insertBefore(box,prev.nextSibling); draw(m.k);
+  });
+ }
+ list.addEventListener('click',e=>{const b=e.target.closest('.ca-it');if(!b)return;idx[b.dataset.k]=+b.dataset.i;draw(b.dataset.k)});
+ const _bm=buildMan;
+ buildMan=function(){_bm();inject()};
+ inject();
+})();
