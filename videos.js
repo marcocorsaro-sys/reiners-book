@@ -63,3 +63,60 @@ const VTYPE = {run:'Run', walk:'Spiegazione'};
  renderPat=function(){_renderPat();if(shown!==P[curP].id)render()};
  render();
 })();
+
+
+/* ===== Video professionali per le manovre (scheda "Manovre") =====
+   Ogni ID e' stato verificato via YouTube oEmbed il 29/09/2026: esiste ed e' incorporabile.
+   Scelti per canale/trainer riconosciuto (Luca Fappani, Matt Mills, Larry Trocha, Pete Kyle...); titolo e canale sono quelli pubblici su YouTube. */
+const MVIDEOS = {
+ stop:[{id:'ELvr80RkVJo',t:'Horse Training Tips for the Stop - Reining Horse Stop',c:'Larry Trocha'},{id:'-jSfSXK6R9Q',t:'Secrets to the STOP! Full-length lesson with professional reiner',c:'Zacharias Horsemanship'}],
+ back:[{id:'2XqfTbplIdo',t:'How to Train a Horse to Stop & Back Up - Basics of sliding stop for reining',c:'Larry Trocha'},{id:'qH1moIBE4fg',t:'Mastering the Horse Backup: A Step-by-Step Training Guide',c:'Tim Anderson Ranch and Horse Training'}],
+ roll:[{id:'MZwv9zMPwFY',t:'Perfect a Rollback in less than 90 seconds',c:'Matt Mills'},{id:'f4JY3BqRiVU',t:'Western - Reining - Roll Back',c:'myhorsetv'}],
+ spin:[{id:'WM5RLXyPibI',t:'How to Teach Your Horse How to Spin - Step 1',c:'Matt Mills'},{id:'Fp9tHXQQeAE',t:'Luca Fappani teaches the spin',c:'Luca Fappani'},{id:'r3gFlOh2l_4',t:'Improving Your Spins with Pete Kyle',c:'Virtual Horse Help'}],
+ circle:[{id:'FLTuN5b126c',t:'Transitioning From A Large Fast To Small Slow Circle',c:'Virtual Horse Help'}],
+ lead:[{id:'LkRNUQjATZo',t:'First Time Changing Leads on a Reining Horse - NRHA Million Dollar Rider, Luca Fappani',c:'Luca Fappani'},{id:'0tu1M4abZMU',t:'Horse Training Tips for Flying Lead Changes',c:'Larry Trocha'}],
+ run:[{id:'TeQZvlpRhv0',t:'Properly Setting Up the Rundown with Luca Fappani',c:'Luca Fappani'}],
+ hes:[{id:'RJS-pv4-G0w',t:'Teaching your horse to shut off in a spin',c:'Matt Mills'},{id:'q0Ml2bQiSOY',t:'Keeping my horse focused on me',c:'Luca Fappani'}]
+};
+(function(){
+ const st=document.createElement('style');
+ st.textContent=`
+ .mv{margin:0 0 14px;border:1px solid var(--line);background:var(--ink2)}
+ .mv-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 10px;border-bottom:1px solid var(--line)}
+ .mv-h .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-right:4px}
+ .mv-tab{font-family:var(--mono);font-size:11px;padding:4px 9px;background:transparent;border:1px solid var(--line2);color:var(--muted);cursor:pointer}
+ .mv-tab.on{background:var(--brass);color:var(--ink);border-color:var(--brass);font-weight:700}
+ .mv-stage{position:relative;aspect-ratio:16/9;background:#000;max-width:100%}
+ .mv-stage iframe,.mv-stage img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+ .mv-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(14,11,9,.35);border:0;cursor:pointer;padding:0}
+ .mv-play span{width:60px;height:60px;border-radius:50%;background:var(--brass);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:22px;padding-left:4px}
+ .mv-play:hover span{background:var(--brass2)}
+ .mv-m{padding:8px 10px;font-size:12.5px;color:var(--muted)}
+ .mv-m b{color:var(--cream);font-weight:500}
+ .mv-m a{font-family:var(--mono);font-size:11px}`;
+ document.head.appendChild(st);
+ const list=document.getElementById('man-list'); if(!list||typeof MAN==='undefined')return;
+ const idx={};
+ function draw(k){
+  const box=document.getElementById('mv-'+k); if(!box)return;
+  const vs=MVIDEOS[k]||[]; const i=idx[k]||0; const v=vs[i]; if(!v){box.remove();return}
+  box.innerHTML=`<div class="mv-h"><span class="lbl">Video · trainer professionisti</span>${vs.length>1?vs.map((x,j)=>`<button class="mv-tab ${j===i?'on':''}" data-k="${k}" data-i="${j}">${j+1}</button>`).join(''):''}</div>
+  <div class="mv-stage"><img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="" loading="lazy"><button class="mv-play" aria-label="Riproduci video"><span>▶</span></button></div>
+  <div class="mv-m"><b>${esc(v.t)}</b> · ${esc(v.c)} · <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">apri su YouTube</a></div>`;
+  box.querySelector('.mv-play').onclick=()=>{box.querySelector('.mv-stage').innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0" title="${esc(v.t)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`};
+ }
+ function inject(){
+  MAN.forEach(m=>{
+   const card=document.getElementById('man-'+m.k); if(!card||document.getElementById('mv-'+m.k))return;
+   if(!(MVIDEOS[m.k]||[]).length)return;
+   const box=document.createElement('div'); box.className='mv'; box.id='mv-'+m.k;
+   const head=card.querySelector('.man-head'); head.parentNode.insertBefore(box,head.nextSibling);
+   draw(m.k);
+  });
+ }
+ list.addEventListener('click',e=>{const b=e.target.closest('.mv-tab');if(!b)return;idx[b.dataset.k]=+b.dataset.i;draw(b.dataset.k)});
+ // buildMan (app.js) ricostruisce le schede al login: reinserisco i video dopo ogni rebuild
+ const _buildMan=buildMan;
+ buildMan=function(){_buildMan();inject()};
+ inject();
+})();
