@@ -1,1 +1,9 @@
-{ "functions": { "api/bit-check.js": { "maxDuration": 30 } } }
+{
+  "functions": {
+    "api/bit-check.js": { "maxDuration": 30 },
+    "api/sync-events.js": { "maxDuration": 60 }
+  },
+  "crons": [
+    { "path": "/api/sync-events", "schedule": "17 4 * * *" }
+  ]
+}

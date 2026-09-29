@@ -214,4 +214,3 @@ const P=[
  ['3 spin a destra. Esita.','Three spins right. Hesitate.',{t:'SP',dir:'R',n:3}],
  ['Inizia un cerchio grande a sinistra senza chiuderlo. Continua lungo il centro oltre il center marker: sliding stop. Backup almeno 3 m. Esita per dimostrare la fine del pattern.','Begin a large circle left, do not close. Continue up the center past the center marker, sliding stop. Back up at least 10 ft. Hesitate.',{t:'RU',lane:'C',from:'B',end:'STB',open:'L'}]]},
 ];
-
