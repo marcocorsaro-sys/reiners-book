@@ -1,9 +1,28 @@
 {
   "functions": {
     "api/bit-check.js": { "maxDuration": 30 },
-    "api/sync-events.js": { "maxDuration": 60 }
+    "api/sync-events.js": { "maxDuration": 60 },
+    "api/site.js": { "maxDuration": 20, "includeFiles": "{data.js,videos.js,index.html}" }
   },
   "crons": [
     { "path": "/api/sync-events", "schedule": "17 4 * * *" }
+  ],
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/api/site?p=sitemap.xml" },
+    { "source": "/pattern", "destination": "/api/site?p=pattern" },
+    { "source": "/pattern/:id", "destination": "/api/site?p=pattern/:id" },
+    { "source": "/manovre", "destination": "/api/site?p=manovre" },
+    { "source": "/manovre/:k", "destination": "/api/site?p=manovre/:k" },
+    { "source": "/giudizio", "destination": "/api/site?p=giudizio" },
+    { "source": "/morso", "destination": "/api/site?p=morso" },
+    { "source": "/calendario", "destination": "/api/site?p=calendario" },
+    { "source": "/calendario/:slug", "destination": "/api/site?p=calendario/:slug" }
+  ],
+  "headers": [
+    { "source": "/(.*)", "headers": [
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+    ] },
+    { "source": "/llms.txt", "headers": [ { "key": "Content-Type", "value": "text/plain; charset=utf-8" } ] }
   ]
 }

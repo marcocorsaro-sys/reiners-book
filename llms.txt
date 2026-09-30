@@ -1,0 +1,19 @@
+# Reiner's Book
+
+> Guida indipendente in italiano al Reining (disciplina western NRHA): i 20 pattern NRHA 2026 spiegati manovra per manovra, le 8 manovre, il giudizio e le penalità, le regole del morso e il calendario delle gare in Italia ed Europa. Sito non affiliato a NRHA, IRHA, OPES o ISHA: fa fede sempre il regolamento ufficiale.
+
+Lingua: italiano (testi originali dei pattern anche in inglese). Fonte principale: NRHA Handbook e Pattern Book 2026. Il calendario è aggiornato ogni notte dalla lista pubblica delle gare.
+
+## Sezioni principali
+- [Pattern NRHA 2026](https://reiningitalia.com/pattern): i 18 pattern ufficiali più i 2 Short Stirrup (A e B), con sequenza delle manovre e video
+- [Manovre del reining](https://reiningitalia.com/manovre): sliding stop, backup, rollback, spin, circle, flying lead change, rundown, hesitate — meccanica, aiuti, progressione, criteri del giudice
+- [Giudizio e penalità](https://reiningitalia.com/giudizio): punteggio base 70, scala −1½/+1½, tabella penalità, equipaggiamento ammesso
+- [Morso ammesso in gara](https://reiningitalia.com/morso): misure NRHA/IRHA e OPES/ISHA a confronto (leva max 21,6 cm, cannone min 8 mm, ponte max 8,9 cm)
+- [Calendario gare di reining](https://reiningitalia.com/calendario): futurity, derby, maturity, campionati e slide in Italia ed Europa
+
+## Applicazione interattiva
+- [Reiner's Book (app)](https://reiningitalia.com/): pattern disegnati nell'arena, quiz, scorecard, classifica, verifica del morso
+
+## Note
+- Sitemap: https://reiningitalia.com/sitemap.xml
+- I pattern si eseguono come scritti, non come disegnati: fa fede il testo.
