@@ -35,7 +35,7 @@
  const sec=document.createElement('section');sec.className='view';sec.id='v-cal';
  sec.innerHTML=`
   <div class="eyebrow">Capitolo I · Stagione 2026</div>
-  <h1>Calendario gare</h1>
+  <h2 class="vt">Calendario gare</h2>
   <p class="lead">Tutte le gare di reining in calendario su Showmanager, aggiornate automaticamente ogni notte. Filtra per paese, tipo e periodo, segui le tue con la stella e aggiungile al tuo calendario.</p>
   <div class="cal-top" id="c-top"></div>
   <div class="cal-filters">

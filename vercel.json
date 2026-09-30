@@ -15,6 +15,8 @@
     { "source": "/manovre/:k", "destination": "/api/site?p=manovre/:k" },
     { "source": "/giudizio", "destination": "/api/site?p=giudizio" },
     { "source": "/morso", "destination": "/api/site?p=morso" },
+    { "source": "/fieracavalli-verona-2026", "destination": "/api/site?p=fieracavalli-verona-2026" },
+    { "source": "/fieracavalli-verona-2026/:s", "destination": "/api/site?p=fieracavalli-verona-2026/:s" },
     { "source": "/calendario", "destination": "/api/site?p=calendario" },
     { "source": "/calendario/:slug", "destination": "/api/site?p=calendario/:slug" }
   ],

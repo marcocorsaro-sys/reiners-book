@@ -72,7 +72,10 @@ footer{border-top:1px solid #2a221b;padding:26px 0 50px;color:var(--mut);font-si
 ul.f{columns:2;padding-left:18px}@media(max-width:640px){ul.f{columns:1}}
 `;
 
+const clip = (t, n) => { t = String(t).replace(/\s+/g, ' ').trim(); if (t.length <= n) return t; const c = t.slice(0, n - 1); return c.slice(0, Math.max(c.lastIndexOf(' '), n - 20)).replace(/[\s,;:.\-–—]+$/, '') + '…'; };
 function layout({ title, desc, url, body, ld = [], active = '', og = 'website', noindex = false }) {
+  title = clip(title.replace(/ \| Reiner's Book$/, ''), 52) + " | Reiner's Book";
+  desc = clip(desc, 155);
   const canon = BASE + url;
   const nav = [['/calendario', 'Calendario'], ['/pattern', 'Pattern'], ['/manovre', 'Manovre'], ['/giudizio', 'Giudizio'], ['/morso', 'Morso']]
     .map(([h, t]) => `<a href="${h}"${active === h ? ' class="on"' : ''}>${t}</a>`).join('');
@@ -93,7 +96,7 @@ ${ld.map(jld).join('\n')}
 <main><div class="wrap">${body}</div></main>
 <footer><div class="wrap">
 <p><b>${NAME}</b> — guida indipendente al Reining in italiano: pattern NRHA 2026, manovre, giudizio, regole del morso e calendario gare. Non affiliato a NRHA, IRHA, OPES o ISHA: fa fede sempre il regolamento ufficiale in vigore.</p>
-<ul class="f"><li><a href="/calendario">Calendario gare di reining</a></li><li><a href="/pattern">I 20 pattern NRHA</a></li><li><a href="/manovre">Le 8 manovre del reining</a></li><li><a href="/giudizio">Come giudica il giudice</a></li><li><a href="/morso">Morso ammesso in gara?</a></li><li><a href="/llms.txt">llms.txt</a></li></ul>
+<ul class="f"><li><a href="/calendario">Calendario gare di reining</a></li><li><a href="/pattern">I 20 pattern NRHA</a></li><li><a href="/manovre">Le 8 manovre del reining</a></li><li><a href="/giudizio">Come giudica il giudice</a></li><li><a href="/morso">Morso ammesso in gara?</a></li><li><a href="/fieracavalli-verona-2026">Reining a Fieracavalli Verona 2026</a></li><li><a href="/llms.txt">llms.txt</a></li></ul>
 </div></footer></body></html>`;
 }
 
@@ -192,7 +195,7 @@ ${cav.length ? `<h2>Metodo Clinton Anderson</h2><p class="en">Approccio da cow h
 <p><a class="cta p" href="/#man">Apri nell'app</a><a class="cta" href="/pattern">Vedi i pattern</a></p>
 <p>${MAN[i - 1] ? `<a href="/manovre/${MAN[i - 1].k}">← ${esc(MAN[i - 1].it)}</a>` : ''}${MAN[i - 1] && MAN[i + 1] ? ' · ' : ''}${MAN[i + 1] ? `<a href="/manovre/${MAN[i + 1].k}">${esc(MAN[i + 1].it)} →</a>` : ''}</p>`;
   return layout({
-    title: `${m.it} nel reining (${m.en}): meccanica, aiuti, giudizio | Reiner's Book`,
+    title: `${m.it} nel reining: meccanica, aiuti, giudizio | Reiner's Book`,
     desc, url, body, active: '/manovre', og: 'article',
     ld: [breadcrumb([['Home', '/'], ['Manovre', '/manovre'], [m.it, url]]),
       { '@context': 'https://schema.org', '@type': 'Article', headline: `${m.it} nel reining`, inLanguage: 'it', mainEntityOfPage: BASE + url, publisher: org },
@@ -202,7 +205,7 @@ ${cav.length ? `<h2>Metodo Clinton Anderson</h2><p class="en">Approccio da cow h
 
 function pRein() {
   const { rein } = data();
-  const inner = rein.replace(/<div class="eyebrow">[\s\S]*?<\/div>\s*<h1>[\s\S]*?<\/h1>/, '').replace(/data-go="[^"]*"/g, '').replace(/href="#(\w+)"/g, (_, x) => `href="/${{ bit: 'morso' }[x] || x}"`);
+  const inner = rein.replace(/<div class="eyebrow">[\s\S]*?<\/div>\s*<h2 class="vt">[\s\S]*?<\/h2>/, '').replace(/data-go="[^"]*"/g, '').replace(/href="#(\w+)"/g, (_, x) => `href="/${{ bit: 'morso' }[x] || x}"`);
   const body = `${crumbs([['Home', '/'], ['Giudizio', '/giudizio']])}
 <div class="eyebrow">Capitolo V</div><h1>Come giudica il giudice di reining: punteggi e penalità NRHA</h1>${inner}
 <p><a class="cta p" href="/#quiz">Fai il quiz sulle penalità</a><a class="cta" href="/pattern">I pattern</a></p>`;
@@ -212,7 +215,7 @@ function pRein() {
     ['Come si giudicano stop e backup?', 'Stop e backup si giudicano come una manovra sola.']
   ];
   return layout({
-    title: 'Giudizio reining NRHA: scala −1½/+1½, penalità e punteggio 70 | Reiner\'s Book',
+    title: 'Giudizio reining NRHA: punteggi e penalità | Reiner\'s Book',
     desc: 'Come si giudica il reining: punteggio base 70, scala di manovra da −1½ a +1½, tabella penalità (0, 5, 2, 1, ½ punti) ed equipaggiamento ammesso NRHA.',
     url: '/giudizio', body, active: '/giudizio',
     ld: [breadcrumb([['Home', '/'], ['Giudizio', '/giudizio']]),
@@ -222,7 +225,7 @@ function pRein() {
 
 function pBit() {
   const { bit } = data();
-  let inner = bit.replace(/<div class="eyebrow">[\s\S]*?<\/div>\s*<h1>[\s\S]*?<\/h1>/, '');
+  let inner = bit.replace(/<div class="eyebrow">[\s\S]*?<\/div>\s*<h2 class="vt">[\s\S]*?<\/h2>/, '');
   // tolgo form e foto (interattivi): resta il testo regolamentare
   inner = inner.replace(/<div class="two"[\s\S]*?<h2>Regole a confronto<\/h2>/, '<h2>Regole a confronto</h2>');
   const body = `${crumbs([['Home', '/'], ['Morso', '/morso']])}
@@ -235,7 +238,7 @@ function pBit() {
     ['Cosa succede con un morso irregolare?', 'Un morso irregolare dopo il run comporta no score.']
   ];
   return layout({
-    title: 'Morso reining ammesso in gara? Misure NRHA/IRHA e OPES/ISHA | Reiner\'s Book',
+    title: 'Morso reining ammesso in gara? Misure NRHA/IRHA | Reiner\'s Book',
     desc: 'Leva max 21,6 cm, cannone min 8 mm, ponte max 8,9 cm: le regole del morso per il reining NRHA/IRHA e OPES/ISHA a confronto, con verificatore online.',
     url: '/morso', body, active: '/morso',
     ld: [breadcrumb([['Home', '/'], ['Morso', '/morso']]),
@@ -315,10 +318,102 @@ async function sitemap() {
   try { ev = await events(); } catch (e) { }
   const u = (loc, lm, pr) => `<url><loc>${BASE}${loc}</loc>${lm ? `<lastmod>${lm}</lastmod>` : ''}${pr ? `<priority>${pr}</priority>` : ''}</url>`;
   const today = new Date().toISOString().slice(0, 10);
-  const urls = [u('/', today, '1.0'), u('/calendario', today, '0.9'), u('/pattern', null, '0.9'), u('/manovre', null, '0.9'), u('/giudizio', null, '0.8'), u('/morso', null, '0.8'),
-    ...P.map(p => u('/pattern/' + p.id, null, '0.7')), ...MAN.map(m => u('/manovre/' + m.k, null, '0.7')),
+  const urls = [u('/', today, '1.0'), u('/calendario', today, '0.9'), u('/pattern', '2026-09-30', '0.9'), u('/manovre', '2026-09-30', '0.9'), u('/giudizio', '2026-09-30', '0.8'), u('/morso', '2026-09-30', '0.8'), u('/fieracavalli-verona-2026', today, '0.9'), u('/fieracavalli-verona-2026/reining-special-event', today, '0.9'),
+    ...P.map(p => u('/pattern/' + p.id, '2026-09-30', '0.7')), ...MAN.map(m => u('/manovre/' + m.k, '2026-09-30', '0.7')),
     ...ev.filter(e => e.status !== 'cancelled').map(e => u('/calendario/' + evSlug(e), (e.updated_at || '').slice(0, 10), '0.5'))];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join('')}</urlset>`;
+}
+
+
+/* ---------- Fieracavalli Verona 2026 (solo fatti verificati da fonti pubbliche) ---------- */
+const FC = '/fieracavalli-verona-2026';
+const FC_SRC = [
+  ['Fieracavalli, sito ufficiale', 'https://www.fieracavalli.it/en/'],
+  ['Western Show, padiglione 11 (Fieracavalli)', 'https://www.fieracavalli.it/en/thematic-areas/sports-and-competitions/Western-Show-Pad-11/'],
+  ['Novità della 128ª edizione (Verona Economia)', 'https://veronaeconomia.it/2026/09/04/leggi-notizia/argomenti/enti/fieracavalli-2026-svelate-a-porto-santelpidio-le-novita-della-128a-edizione-debutta-house-of-fieracavalli.html']
+];
+const EU = ['IT', 'FR', 'DE', 'AT', 'CH', 'ES', 'NL', 'BE', 'PL', 'CZ', 'SK', 'HU', 'GB', 'IE', 'DK', 'SE', 'NO', 'FI', 'PT'];
+const fcEvent = {
+  '@context': 'https://schema.org', '@type': 'Event', name: 'Fieracavalli Verona 2026 (128ª edizione)',
+  startDate: '2026-11-05', endDate: '2026-11-08', eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode', eventStatus: 'https://schema.org/EventScheduled',
+  location: { '@type': 'Place', name: 'Veronafiere', address: { '@type': 'PostalAddress', streetAddress: 'Viale del Lavoro 8', addressLocality: 'Verona', addressCountry: 'IT' } },
+  url: 'https://www.fieracavalli.it/'
+};
+const fcNote = `<div class="note"><b>Sito indipendente.</b> Reiner's Book non è affiliato a Fieracavalli né a Veronafiere. Le informazioni vengono da fonti pubbliche indicate in fondo alla pagina; programma, orari e padiglioni possono cambiare: verifica sempre sul sito ufficiale prima di partire.</div>`;
+const fcSources = `<h2>Fonti</h2><ul>${FC_SRC.map(([t, u]) => `<li><a href="${u}" rel="noopener" target="_blank">${esc(t)}</a></li>`).join('')}</ul>`;
+
+async function pFiera() {
+  let near = [];
+  try { near = (await events('&start_date=gte.2026-10-25&start_date=lte.2026-11-20')).filter(e => EU.includes(e.country) && e.status !== 'cancelled'); } catch (e) { }
+  const faq = [
+    ['Quando si svolge Fieracavalli 2026?', 'La 128ª edizione si svolge dal 5 all\'8 novembre 2026 a Veronafiere, Verona.'],
+    ['Dov\'è il reining a Fieracavalli 2026?', 'Il reining è nel Western Show, padiglione 11 secondo il sito ufficiale: il Reining Special Event è in programma venerdì 6 e sabato 7 novembre in serata.'],
+    ['Quali altre discipline western ci sono?', 'Il Western Show include Barrel, Team Penning e Ranch Sorting, oltre a dimostrazioni di morfologia delle razze americane.']
+  ];
+  const body = `${crumbs([['Home', '/'], ['Fieracavalli Verona 2026', FC]])}
+<div class="eyebrow">Guida indipendente · 5-8 novembre 2026</div><h1>Reining a Fieracavalli Verona 2026: dove, quando e cosa vedere</h1>
+<p class="lead">La 128ª edizione di Fieracavalli è a Veronafiere dal 5 all'8 novembre 2026. Per gli appassionati di reining il punto di riferimento è il Western Show, con il Reining Special Event nelle serate di venerdì e sabato.</p>
+<div class="stats"><div class="stat"><div class="stat-n" style="font-size:20px">5-8 novembre</div><div class="stat-l">giovedì-domenica</div></div><div class="stat"><div class="stat-n" style="font-size:20px">Padiglione 11</div><div class="stat-l">Western Show*</div></div><div class="stat"><div class="stat-n" style="font-size:20px">Ven 6 · Sab 7</div><div class="stat-l">Reining Special Event, sera</div></div></div>
+<p class="en">* Il sito ufficiale 2026 indica il padiglione 11; la pagina dell'edizione 2025 indicava il 12. Conferma sul programma ufficiale.</p>
+<h2>Il Western Show</h2>
+<p>Secondo la pagina ufficiale dell'edizione 2026, il Western Show ospita Barrel, Team Penning, Ranch Sorting e il Reining Special Event, più dimostrazioni di morfologia delle razze americane. Gli orari precisi delle gare non sono ancora stati pubblicati sulla pagina.</p>
+<p><a class="cta p" href="${FC}/reining-special-event">Le due serate del reining</a><a class="cta" href="/manovre">Impara a leggere una gara</a></p>
+<h2>Orari e sede</h2>
+<p>Veronafiere, Viale del Lavoro 8, Verona. Orari indicati da un sito di informazione locale (non ufficiale): giovedì-sabato 9-20, domenica 9-19; i padiglioni commerciali chiudono alle 19.</p>
+<h2>Come guardare una gara di reining</h2>
+<p>Ogni cavaliere esegue un pattern con le stesse manovre: cerchi, spin, stop, rollback e cambi di galoppo. Il giudice parte da 70 e assegna da −1½ a +1½ a ogni manovra, sottraendo le penalità. Qui trovi le guide per seguire la serata alla pari dei giudici:</p>
+<ul><li><a href="/pattern">I 20 pattern NRHA</a></li><li><a href="/manovre">Le 8 manovre del reining</a></li><li><a href="/giudizio">Punteggi e penalità</a></li></ul>
+${near.length ? `<h2>Altre gare di reining nelle stesse settimane</h2>${near.map(evLi).join('')}` : ''}
+<h2>Ospiti e protagonisti</h2>
+<p>Al momento le fonti ufficiali consultate non pubblicano nomi di ospiti per il Western Show. Li aggiungeremo qui solo quando saranno annunciati dall'organizzazione.</p>
+<h2>Domande frequenti</h2>${faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('')}
+${fcNote}${fcSources}`;
+  return layout({
+    title: 'Reining a Fieracavalli Verona 2026: date e programma',
+    desc: 'Fieracavalli Verona 5-8 novembre 2026: dove si trova il reining (Western Show), le serate del Reining Special Event, orari e come seguire la gara.',
+    url: FC, body, active: FC,
+    ld: [breadcrumb([['Home', '/'], ['Fieracavalli Verona 2026', FC]]), fcEvent,
+      { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }]
+  });
+}
+
+function pSpecial() {
+  const url = FC + '/reining-special-event';
+  const faq = [
+    ['Quando è il Reining Special Event a Fieracavalli 2026?', 'Secondo il sito ufficiale, venerdì 6 e sabato 7 novembre 2026 in serata, nel Western Show.'],
+    ['A che ora inizia?', 'Gli orari non sono ancora pubblicati sulla pagina ufficiale consultata: controlla il programma della fiera.']
+  ];
+  const body = `${crumbs([['Home', '/'], ['Fieracavalli Verona 2026', FC], ['Reining Special Event', url]])}
+<div class="eyebrow">Fieracavalli Verona 2026 · Western Show</div><h1>Reining Special Event a Fieracavalli 2026: le serate del 6 e 7 novembre</h1>
+<p class="lead">Il Reining Special Event è in programma nelle serate di venerdì 6 e sabato 7 novembre 2026 nel Western Show di Fieracavalli, a Veronafiere.</p>
+<p><a class="cta p" href="${url}.ics">Aggiungi le due serate al calendario</a><a class="cta" href="${FC}">Guida completa alla fiera</a></p>
+<p class="en">Il file calendario contiene due eventi di un'intera giornata (6 e 7 novembre): gli orari delle gare non sono stati pubblicati.</p>
+<h2>Cosa aspettarsi</h2>
+<p>Il Western Show riunisce Barrel, Team Penning, Ranch Sorting e il Reining Special Event, in un'atmosfera che l'organizzazione descrive "made in USA". Il Reining Special Event è una delle due serate di punta.</p>
+<h2>Prepara la serata</h2>
+<ul><li><a href="/pattern">I pattern NRHA</a>: la sequenza che vedrai eseguire.</li><li><a href="/manovre/stop">Lo sliding stop</a> e <a href="/manovre/spin">gli spin</a>: le manovre che fanno la differenza.</li><li><a href="/giudizio">Come giudica il giudice</a>: punteggio base 70, scala −1½/+1½ e penalità.</li><li><a href="/#quiz">Il quiz</a> per mettersi alla prova.</li></ul>
+<h2>Domande frequenti</h2>${faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('')}
+${fcNote}${fcSources}`;
+  return layout({
+    title: 'Reining Special Event Fieracavalli 2026: 6-7 novembre',
+    desc: 'Il Reining Special Event a Fieracavalli Verona 2026: serate di venerdì 6 e sabato 7 novembre nel Western Show. Aggiungi le date al calendario.',
+    url, body, active: FC, og: 'article',
+    ld: [breadcrumb([['Home', '/'], ['Fieracavalli Verona 2026', FC], ['Reining Special Event', url]]),
+      { '@context': 'https://schema.org', '@type': 'SportsEvent', name: 'Reining Special Event, Fieracavalli Verona 2026', sport: 'Reining', startDate: '2026-11-06', endDate: '2026-11-07',
+        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode', eventStatus: 'https://schema.org/EventScheduled', location: fcEvent.location, url: BASE + url },
+      { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }]
+  });
+}
+
+function fcIcs() {
+  const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Reiners Book//Fieracavalli 2026//IT', 'CALSCALE:GREGORIAN'];
+  [['20261106', '20261107', 'venerdì 6'], ['20261107', '20261108', 'sabato 7']].forEach(([s, e, d], i) => {
+    L.push('BEGIN:VEVENT', `UID:reining-special-event-${s}@reiningitalia.com`, 'DTSTAMP:20260930T000000Z', `DTSTART;VALUE=DATE:${s}`, `DTEND;VALUE=DATE:${e}`,
+      'SUMMARY:Reining Special Event - Fieracavalli Verona 2026', 'LOCATION:Veronafiere\\, Viale del Lavoro 8\\, Verona',
+      `DESCRIPTION:Serata di ${d} novembre nel Western Show. Orari non ancora pubblicati: verifica il programma ufficiale. Guida: ${BASE}${FC}/reining-special-event`, 'END:VEVENT');
+  });
+  L.push('END:VCALENDAR');
+  return L.join('\r\n') + '\r\n';
 }
 
 module.exports = async (req, res) => {
@@ -330,6 +425,7 @@ module.exports = async (req, res) => {
     else if (a === 'pattern') html = b ? pPattern(b) : pPatternIndex();
     else if (a === 'manovre') html = b ? pMan(b) : pManIndex();
     else if (a === 'giudizio') html = pRein();
+    else if (a === 'fieracavalli-verona-2026') { if (!b) html = await pFiera(); else if (b === 'reining-special-event') html = pSpecial(); else if (b === 'reining-special-event.ics') { html = fcIcs(); type = 'text/calendar; charset=utf-8'; } cache = 'public, s-maxage=3600, stale-while-revalidate=86400'; }
     else if (a === 'morso') html = pBit();
     else if (a === 'calendario') { html = b ? await pEvent(b) : await pCal(); cache = 'public, s-maxage=3600, stale-while-revalidate=86400'; }
     if (!html) { res.statusCode = 404; res.setHeader('Content-Type', 'text/html; charset=utf-8'); return res.end(layout({ title: 'Pagina non trovata | Reiner\'s Book', desc: 'Pagina non trovata', url: '/' + p, noindex: true, body: '<h1>Pagina non trovata</h1><p><a href="/">Torna alla home</a></p>' })); }

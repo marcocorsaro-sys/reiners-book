@@ -34,6 +34,8 @@ main{padding:40px 48px 80px;max-width:1120px;width:100%}
 section.view{display:none}section.view.on{display:block}
 h1{font-family:var(--serif);font-size:44px;line-height:1.05;font-weight:600;margin:0 0 14px;letter-spacing:-.01em;text-wrap:balance}
 h1 em{font-style:italic;color:var(--brass);font-weight:500}
+.view h2.vt::after{display:none}
+.view h2.vt{padding-bottom:0;position:static;font-family:var(--serif);font-size:44px;line-height:1.05;font-weight:600;margin:0 0 14px;letter-spacing:-.01em;text-wrap:balance;color:inherit}
 h2{font-family:var(--serif);font-size:26px;font-weight:600;margin:36px 0 12px;color:var(--brass2);text-wrap:balance;position:relative;padding-bottom:8px}
 h2::after{content:"";position:absolute;left:0;bottom:0;width:64px;height:1px;background:var(--brass)}
 h3{font-family:var(--mono);font-size:11px;margin:0 0 8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
@@ -142,7 +144,7 @@ input{display:block;width:100%;margin-top:6px;background:var(--ink2);border:1px 
   nav button{font-size:15px;padding:6px 8px;border-left:0;border-bottom:2px solid transparent}nav button.on{border-bottom-color:var(--brass);background:none}nav button .num{display:none}
   .rider{margin:0 0 0 auto;padding:0;border:0;display:flex;align-items:center;gap:8px}.rider-horse{display:none}.rider-name{font-size:15px}
   main{padding:22px 16px 60px}
-  h1{font-size:34px}.hero{grid-template-columns:1fr}.hero h1{font-size:38px}.hero-art{display:none}
+  h1,.view h2.vt{font-size:34px}.hero{grid-template-columns:1fr}.hero h1{font-size:38px}.hero-art{display:none}
   .pv,.two{grid-template-columns:1fr}.sticky{position:static}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
