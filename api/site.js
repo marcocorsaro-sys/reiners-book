@@ -46,6 +46,9 @@ header.top .wrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding
 .logo{font:600 22px 'Cormorant Garamond',Georgia,serif;color:var(--cream);text-decoration:none}.logo em{color:var(--brass)}
 nav.m{display:flex;gap:14px;flex-wrap:wrap;font:500 13px 'JetBrains Mono',monospace}nav.m a{text-decoration:none;color:var(--mut)}nav.m a:hover,nav.m a.on{color:var(--brass2)}
 main{padding:34px 0 60px}
+figure.ph{margin:18px 0;border-radius:12px;overflow:hidden;border:1px solid #2a221b;background:var(--ink2)}figure.ph img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}figure.ph.sq img{aspect-ratio:1/1}figcaption{font:11px 'JetBrains Mono',monospace;color:var(--mut);padding:8px 12px;letter-spacing:.04em}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}.gal figure.ph{margin:0}
+.card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:8px}
 h1{font:600 clamp(32px,6vw,52px)/1.1 'Cormorant Garamond',Georgia,serif;margin:.2em 0 .3em}
 h2{font:600 28px 'Cormorant Garamond',Georgia,serif;color:var(--brass2);margin:1.6em 0 .4em}
 h3{font:600 12px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin:1.2em 0 .3em}
@@ -87,7 +90,8 @@ function layout({ title, desc, url, body, ld = [], active = '', og = 'website', 
 ${noindex ? '<meta name="robots" content="noindex,follow">' : '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">'}
 <meta property="og:type" content="${og}"><meta property="og:site_name" content="${NAME}"><meta property="og:locale" content="it_IT">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${canon}">
-<meta name="twitter:card" content="summary"><meta name="theme-color" content="#0e0b09">
+<meta property="og:image" content="${BASE}/img/11-og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Cavallo e cavaliere in sliding stop nella polvere dorata (immagine illustrativa AI)">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${BASE}/img/11-og.jpg"><meta name="theme-color" content="#0e0b09">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>${CSS}</style>
 ${ld.map(jld).join('\n')}
@@ -156,12 +160,23 @@ ${vids.length ? `<h2>Video del ${esc(p.name)}</h2><div class="vid">${vids.map(v 
   });
 }
 
+
+/* Immagini illustrative generate con AI (ID = scheda foto del brief) */
+const AIC = 'Immagine illustrativa generata con AI';
+const MIMG = {
+  circle: ['09a-circle', 'Cavaliera su cavallo baio in una curva ampia in arena all\'aperto'],
+  back: ['09f-back-up', 'Cavallo sauro con testa bassa che arretra con un passo corto'],
+  run: ['09g-run-down', 'Cavallo sauro al galoppo in rettilineo con falcata ampia'],
+  hes: ['09h-stop-finale', 'Cavallo sauro fermo e rilassato a fine esecuzione']
+};
+const fig = (id, alt, cls = '') => `<figure class="ph ${cls}"><img src="/img/${id}.webp" alt="${esc(alt)}" width="1448" height="1086" loading="lazy" decoding="async"><figcaption>${AIC}</figcaption></figure>`;
+
 function pManIndex() {
   const { MAN } = data();
   const body = `${crumbs([['Home', '/'], ['Manovre', '/manovre']])}
 <div class="eyebrow">Capitolo IV</div><h1>Le 8 manovre del reining</h1>
 <p class="lead">Sliding stop, backup, rollback, spin, circle, flying lead change, rundown e hesitate: per ciascuna la meccanica, gli aiuti, la progressione di addestramento e cosa guarda il giudice.</p>
-<div class="grid">${MAN.map(m => `<a class="card" href="/manovre/${m.k}"><b>${esc(m.it)}</b><span>${esc(m.en)}</span></a>`).join('')}</div>
+<div class="grid">${MAN.map(m => `<a class="card" href="/manovre/${m.k}">${MIMG[m.k] ? `<img src="/img/${MIMG[m.k][0]}.webp" alt="${esc(MIMG[m.k][1])}" width="1448" height="1086" loading="lazy" decoding="async">` : ''}<b>${esc(m.it)}</b><span>${esc(m.en)}</span></a>`).join('')}</div>
 <p><a class="cta p" href="/#man">Segna le manovre studiate nell'app</a></p>`;
   return layout({
     title: 'Le manovre del reining: stop, spin, rollback, lead change | Reiner\'s Book',
@@ -186,6 +201,7 @@ function pMan(k) {
   ];
   const body = `${crumbs([['Home', '/'], ['Manovre', '/manovre'], [m.it, url]])}
 <div class="eyebrow">${esc(m.en)}</div><h1>${esc(m.it)} nel reining</h1>
+${MIMG[k] ? fig(MIMG[k][0], MIMG[k][1]) : ''}
 <h2>Meccanica</h2><p>${m.mech}</p>
 <h2>Aiuti</h2><ul>${m.aids.map(a => `<li>${a}</li>`).join('')}</ul>
 <h2>Progressione di addestramento</h2><ol>${m.prog.map(a => `<li>${a}</li>`).join('')}</ol>
@@ -229,7 +245,9 @@ function pBit() {
   // tolgo form e foto (interattivi): resta il testo regolamentare
   inner = inner.replace(/<div class="two"[\s\S]*?<h2>Regole a confronto<\/h2>/, '<h2>Regole a confronto</h2>');
   const body = `${crumbs([['Home', '/'], ['Morso', '/morso']])}
-<div class="eyebrow">Capitolo III</div><h1>Morso nel reining: misure ammesse NRHA/IRHA e OPES/ISHA</h1>${inner}
+<div class="eyebrow">Capitolo III</div><h1>Morso nel reining: misure ammesse NRHA/IRHA e OPES/ISHA</h1>
+<div class="gal">${fig('10a-morso-filetto', 'Filetto con anelli e morso western con leve e catenella su un tavolo di legno', 'sq')}${fig('10b-sella', 'Sella western in cuoio lavorato su un supporto di legno', 'sq')}${fig('10c-protezioni', 'Protezioni per cavallo nere e marroni su un banco di legno', 'sq')}</div>
+${inner}
 <p><a class="cta p" href="/#bit">Verifica il tuo morso (calcolatore + parere da foto)</a></p>`;
   const faq = [
     ['Quanto può essere lunga la leva del morso in una gara NRHA?', 'Massimo 8½" (21,6 cm) dal bridle ring al rein ring.'],
