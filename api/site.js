@@ -46,7 +46,7 @@ header.top .wrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding
 .logo{font:600 22px 'Cormorant Garamond',Georgia,serif;color:var(--cream);text-decoration:none}.logo em{color:var(--brass)}
 nav.m{display:flex;gap:14px;flex-wrap:wrap;font:500 13px 'JetBrains Mono',monospace}nav.m a{text-decoration:none;color:var(--mut)}nav.m a:hover,nav.m a.on{color:var(--brass2)}
 main{padding:34px 0 60px}
-figure.ph{margin:18px 0;border-radius:12px;overflow:hidden;border:1px solid #2a221b;background:var(--ink2)}figure.ph img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}figure.ph.sq img{aspect-ratio:1/1}figcaption{font:11px 'JetBrains Mono',monospace;color:var(--mut);padding:8px 12px;letter-spacing:.04em}
+figure.ph{margin:18px 0;border-radius:12px;overflow:hidden;border:1px solid #2a221b;background:var(--ink2)}figure.ph img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}figure.ph.sq img{aspect-ratio:1/1}figure.ph.wide img{aspect-ratio:16/9}figcaption{font:11px 'JetBrains Mono',monospace;color:var(--mut);padding:8px 12px;letter-spacing:.04em}
 .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}.gal figure.ph{margin:0}
 .card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:8px}
 h1{font:600 clamp(32px,6vw,52px)/1.1 'Cormorant Garamond',Georgia,serif;margin:.2em 0 .3em}
@@ -118,6 +118,7 @@ function pPatternIndex() {
   const { P } = data();
   const body = `${crumbs([['Home', '/'], ['Pattern', '/pattern']])}
 <div class="eyebrow">NRHA Pattern Book 2026</div><h1>I 20 pattern NRHA di reining, spiegati manovra per manovra</h1>
+${band('08-header-pattern', 'Cavaliere visto da dietro che entra in arena al tramonto')}
 <p class="lead">I 18 pattern NRHA ufficiali e i 2 Short Stirrup (A e B), tradotti in italiano con il testo originale inglese: ordine delle manovre, spin, circle, lead change, stop e hesitate. Per ogni pattern trovi anche i video di run e spiegazioni.</p>
 <div class="grid">${P.map(p => `<a class="card" href="/pattern/${esc(p.id)}"><b>${esc(p.name)}</b><span>${p.steps.length} manovre · ${esc(strip(p.start)).slice(0, 70)}</span></a>`).join('')}</div>
 <p><a class="cta p" href="/#pat">Apri i pattern interattivi</a><a class="cta" href="/manovre">Studia le manovre</a></p>
@@ -144,6 +145,7 @@ function pPattern(id) {
   const prev = P[i - 1], next = P[i + 1];
   const body = `${crumbs([['Home', '/'], ['Pattern', '/pattern'], [p.name, url]])}
 <div class="eyebrow">NRHA Pattern Book 2026</div><h1>${esc(p.name)} di reining</h1>
+${band('08-header-pattern', 'Cavaliere visto da dietro che entra in arena al tramonto')}
 <p class="lead">${esc(p.start)} Il pattern è composto da ${p.steps.length} manovre; sotto trovi la sequenza in italiano con il testo originale NRHA.</p>
 <h2>Sequenza delle manovre</h2>
 <ol class="steps">${p.steps.map(s => `<li>${esc(s[0])}<span class="en" lang="en">${esc(s[1])}</span></li>`).join('')}</ol>
@@ -164,11 +166,17 @@ ${vids.length ? `<h2>Video del ${esc(p.name)}</h2><div class="vid">${vids.map(v 
 /* Immagini illustrative generate con AI (ID = scheda foto del brief) */
 const AIC = 'Immagine illustrativa generata con AI';
 const MIMG = {
-  circle: ['09a-circle', 'Cavaliera su cavallo baio in una curva ampia in arena all\'aperto'],
+  circle: ['09a-circle', 'Cavaliera su cavallo baio in una curva ampia, con la traccia curva sulla sabbia'],
+  spin: ['09b-spin', 'Cavallo baio in spin con gli anteriori incrociati, cavaliere con camicia blu'],
+  roll: ['09c-rollback', 'Cavallo sauro in rollback con una nube di polvere dietro'],
+  stop: ['09d-sliding-stop', 'Cavallo sauro in sliding stop di profilo con posteriori bassi e polvere'],
+  lead: ['09e-lead-change', 'Cavaliera su cavallo baio in una fase sospesa del galoppo'],
   back: ['09f-back-up', 'Cavallo sauro con testa bassa che arretra con un passo corto'],
   run: ['09g-run-down', 'Cavallo sauro al galoppo in rettilineo con falcata ampia'],
   hes: ['09h-stop-finale', 'Cavallo sauro fermo e rilassato a fine esecuzione']
 };
+const band = (id, alt, cap = AIC) => `<figure class="ph wide"><picture><source media="(max-width:700px)" srcset="/img/${id}-900.webp"><img src="/img/${id}.webp" alt="${esc(alt)}" width="1672" height="941" decoding="async"></picture><figcaption>${cap}</figcaption></figure>`;
+
 const fig = (id, alt, cls = '') => `<figure class="ph ${cls}"><img src="/img/${id}.webp" alt="${esc(alt)}" width="1448" height="1086" loading="lazy" decoding="async"><figcaption>${AIC}</figcaption></figure>`;
 
 function pManIndex() {
@@ -296,6 +304,7 @@ async function pCal() {
   const year = new Date().getUTCFullYear();
   const body = `${crumbs([['Home', '/'], ['Calendario', '/calendario']])}
 <div class="eyebrow">Aggiornato ogni notte</div><h1>Calendario gare di reining ${year}: Italia ed Europa</h1>
+${band('07-header-calendario', 'Arena coperta vista dalle tribune durante una gara di reining')}
 <p class="lead">${up.length} gare di reining in programma (${it.length} in Italia): futurity, derby, maturity, campionati e slide. Dati raccolti dalla lista pubblica delle gare e aggiornati ogni notte.</p>
 ${it.length ? `<h2>Prossime gare in Italia</h2>${it.slice(0, 30).map(evLi).join('')}` : ''}
 <h2>Prossime gare in Europa e nel mondo</h2>${up.filter(e => e.country !== 'IT').slice(0, 60).map(evLi).join('')}
@@ -370,6 +379,7 @@ async function pFiera() {
   ];
   const body = `${crumbs([['Home', '/'], ['Fieracavalli Verona 2026', FC]])}
 <div class="eyebrow">Guida indipendente · 5-8 novembre 2026</div><h1>Reining a Fieracavalli Verona 2026: dove, quando e cosa vedere</h1>
+${band('03-hero-fieracavalli', 'Cavaliera in arena coperta di sera con pubblico e fari', AIC + ': non è una foto di Fieracavalli')}
 <p class="lead">La 128ª edizione di Fieracavalli è a Veronafiere dal 5 all'8 novembre 2026. Per gli appassionati di reining il punto di riferimento è il Western Show, con il Reining Special Event nelle serate di venerdì e sabato.</p>
 <div class="stats"><div class="stat"><div class="stat-n" style="font-size:20px">5-8 novembre</div><div class="stat-l">giovedì-domenica</div></div><div class="stat"><div class="stat-n" style="font-size:20px">Padiglione 11</div><div class="stat-l">Western Show*</div></div><div class="stat"><div class="stat-n" style="font-size:20px">Ven 6 · Sab 7</div><div class="stat-l">Reining Special Event, sera</div></div></div>
 <p class="en">* Il sito ufficiale 2026 indica il padiglione 11; la pagina dell'edizione 2025 indicava il 12. Conferma sul programma ufficiale.</p>
@@ -403,6 +413,7 @@ function pSpecial() {
   ];
   const body = `${crumbs([['Home', '/'], ['Fieracavalli Verona 2026', FC], ['Reining Special Event', url]])}
 <div class="eyebrow">Fieracavalli Verona 2026 · Western Show</div><h1>Reining Special Event a Fieracavalli 2026: le serate del 6 e 7 novembre</h1>
+${band('03-hero-fieracavalli', 'Cavaliera in arena coperta di sera con pubblico e fari', AIC + ': non è una foto di Fieracavalli')}
 <p class="lead">Il Reining Special Event è in programma nelle serate di venerdì 6 e sabato 7 novembre 2026 nel Western Show di Fieracavalli, a Veronafiere.</p>
 <p><a class="cta p" href="${url}.ics">Aggiungi le due serate al calendario</a><a class="cta" href="${FC}">Guida completa alla fiera</a></p>
 <p class="en">Il file calendario contiene due eventi di un'intera giornata (6 e 7 novembre): gli orari delle gare non sono stati pubblicati.</p>
