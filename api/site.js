@@ -175,6 +175,7 @@ const MIMG = {
   run: ['09g-run-down', 'Cavallo sauro al galoppo in rettilineo con falcata ampia'],
   hes: ['09h-stop-finale', 'Cavallo sauro fermo e rilassato a fine esecuzione']
 };
+const real = (id, alt, w, h) => `<figure class="ph wide"><picture><source media="(max-width:700px)" srcset="/img/${id}-900.webp"><img src="/img/${id}.webp" alt="${esc(alt)}" width="${w}" height="${h}" loading="lazy" decoding="async"></picture></figure>`;
 const band = (id, alt, cap = AIC) => `<figure class="ph wide"><picture><source media="(max-width:700px)" srcset="/img/${id}-900.webp"><img src="/img/${id}.webp" alt="${esc(alt)}" width="1672" height="941" decoding="async"></picture><figcaption>${cap}</figcaption></figure>`;
 
 const fig = (id, alt, cls = '') => `<figure class="ph ${cls}"><img src="/img/${id}.webp" alt="${esc(alt)}" width="1448" height="1086" loading="lazy" decoding="async"><figcaption>${AIC}</figcaption></figure>`;
@@ -210,6 +211,7 @@ function pMan(k) {
   const body = `${crumbs([['Home', '/'], ['Manovre', '/manovre'], [m.it, url]])}
 <div class="eyebrow">${esc(m.en)}</div><h1>${esc(m.it)} nel reining</h1>
 ${MIMG[k] ? fig(MIMG[k][0], MIMG[k][1]) : ''}
+${k === 'stop' ? real('14-sliding-stop-gara', 'Cavaliere in camicia bordeaux durante una sliding stop in gara, con sabbia sollevata', 1264, 841) : ''}
 <h2>Meccanica</h2><p>${m.mech}</p>
 <h2>Aiuti</h2><ul>${m.aids.map(a => `<li>${a}</li>`).join('')}</ul>
 <h2>Progressione di addestramento</h2><ol>${m.prog.map(a => `<li>${a}</li>`).join('')}</ol>
@@ -254,6 +256,7 @@ function pBit() {
   inner = inner.replace(/<div class="two"[\s\S]*?<h2>Regole a confronto<\/h2>/, '<h2>Regole a confronto</h2>');
   const body = `${crumbs([['Home', '/'], ['Morso', '/morso']])}
 <div class="eyebrow">Capitolo III</div><h1>Morso nel reining: misure ammesse NRHA/IRHA e OPES/ISHA</h1>
+${real('13-morso-cavallo-sellato', 'Cavallo sauro sellato con testiera e imboccatura, accanto alla cavallerizza western', 2000, 1333)}
 <div class="gal">${fig('10a-morso-filetto', 'Filetto con anelli e morso western con leve e catenella su un tavolo di legno', 'sq')}${fig('10b-sella', 'Sella western in cuoio lavorato su un supporto di legno', 'sq')}${fig('10c-protezioni', 'Protezioni per cavallo nere e marroni su un banco di legno', 'sq')}</div>
 ${inner}
 <p><a class="cta p" href="/#bit">Verifica il tuo morso (calcolatore + parere da foto)</a></p>`;
