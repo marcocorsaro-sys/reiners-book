@@ -90,7 +90,7 @@ function layout({ title, desc, url, body, ld = [], active = '', og = 'website', 
 ${noindex ? '<meta name="robots" content="noindex,follow">' : '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">'}
 <meta property="og:type" content="${og}"><meta property="og:site_name" content="${NAME}"><meta property="og:locale" content="it_IT">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${canon}">
-<meta property="og:image" content="${BASE}/img/11-og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Cavallo e cavaliere in sliding stop nella polvere dorata (immagine illustrativa AI)">
+<meta property="og:image" content="${BASE}/img/11-og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Cavallo baio in sliding stop visto di fronte, con una nube di sabbia dorata">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${BASE}/img/11-og.jpg"><meta name="theme-color" content="#0e0b09">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>${CSS}</style>
