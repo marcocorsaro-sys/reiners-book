@@ -46,7 +46,7 @@ header.top .wrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding
 .logo{font:600 22px 'Cormorant Garamond',Georgia,serif;color:var(--cream);text-decoration:none}.logo em{color:var(--brass)}
 nav.m{display:flex;gap:14px;flex-wrap:wrap;font:500 13px 'JetBrains Mono',monospace}nav.m a{text-decoration:none;color:var(--mut)}nav.m a:hover,nav.m a.on{color:var(--brass2)}
 main{padding:34px 0 60px}
-figure.ph{margin:18px 0;border-radius:12px;overflow:hidden;border:1px solid #2a221b;background:var(--ink2)}figure.ph img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}figure.ph.sq img{aspect-ratio:1/1}figure.ph.wide img{aspect-ratio:16/9}figure.ph video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}figcaption{font:11px 'JetBrains Mono',monospace;color:var(--mut);padding:8px 12px;letter-spacing:.04em}
+figure.ph{margin:18px 0;border-radius:12px;overflow:hidden;border:1px solid #2a221b;background:var(--ink2)}figure.ph img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}figure.ph.sq img{aspect-ratio:1/1}figure.ph.wide img{aspect-ratio:16/9}figure.ph.r65 img{aspect-ratio:6/5}figure.ph video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}figcaption{font:11px 'JetBrains Mono',monospace;color:var(--mut);padding:8px 12px;letter-spacing:.04em}
 .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}.gal figure.ph{margin:0}
 .card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:8px}
 h1{font:600 clamp(32px,6vw,52px)/1.1 'Cormorant Garamond',Georgia,serif;margin:.2em 0 .3em}
@@ -166,17 +166,17 @@ ${vids.length ? `<h2>Video del ${esc(p.name)}</h2><div class="vid">${vids.map(v 
 /* Immagini illustrative generate con AI (ID = scheda foto del brief) */
 const AIC = 'Immagine illustrativa generata con AI';
 const MIMG = {
-  circle: ['09a-circle', 'Cavaliera su cavallo baio in una curva ampia, con la traccia curva sulla sabbia'],
+  circle: ['18-circle-galoppo', 'Cavaliere in camicia chiara su cavallo sauro in galoppo lento nell\'arena, luce dorata del tramonto', 'r65', 1500, 1250],
   spin: ['09b-spin', 'Cavallo baio in spin con gli anteriori incrociati, cavaliere con camicia blu'],
   roll: ['09c-rollback', 'Cavallo sauro in rollback con una nube di polvere dietro'],
-  stop: ['17-sliding-stop-sauro', 'Cavallo sauro in sliding stop di profilo, con il cavaliere in nero e sabbia sollevata', 'real'],
+  stop: ['17-sliding-stop-sauro', 'Cavallo sauro in sliding stop di profilo, con il cavaliere in nero e sabbia sollevata', 'wide', 1264, 841],
   lead: ['09e-lead-change', 'Cavaliera su cavallo baio in una fase sospesa del galoppo'],
   back: ['09f-back-up', 'Cavallo sauro con testa bassa che arretra con un passo corto'],
   run: ['09g-run-down', 'Cavallo sauro al galoppo in rettilineo con falcata ampia'],
   hes: ['09h-stop-finale', 'Cavallo sauro fermo e rilassato a fine esecuzione']
 };
 const vid = (src, poster, alt, cap) => `<figure class="ph wide"><video src="/video/${src}.mp4" poster="/img/${poster}.webp" muted loop autoplay playsinline preload="metadata" aria-label="${esc(alt)}"></video>${cap ? `<figcaption>${esc(cap)}</figcaption>` : ''}</figure>`;
-const real = (id, alt, w, h) => `<figure class="ph wide"><picture><source media="(max-width:700px)" srcset="/img/${id}-900.webp"><img src="/img/${id}.webp" alt="${esc(alt)}" width="${w}" height="${h}" loading="lazy" decoding="async"></picture></figure>`;
+const real = (id, alt, w, h, cls = 'wide') => `<figure class="ph ${cls}"><picture><source media="(max-width:700px)" srcset="/img/${id}-900.webp"><img src="/img/${id}.webp" alt="${esc(alt)}" width="${w}" height="${h}" loading="lazy" decoding="async"></picture></figure>`;
 const band = (id, alt, cap = AIC) => `<figure class="ph wide"><picture><source media="(max-width:700px)" srcset="/img/${id}-900.webp"><img src="/img/${id}.webp" alt="${esc(alt)}" width="1672" height="941" decoding="async"></picture><figcaption>${cap}</figcaption></figure>`;
 
 const fig = (id, alt, cls = '') => `<figure class="ph ${cls}"><img src="/img/${id}.webp" alt="${esc(alt)}" width="1448" height="1086" loading="lazy" decoding="async"><figcaption>${AIC}</figcaption></figure>`;
@@ -186,7 +186,7 @@ function pManIndex() {
   const body = `${crumbs([['Home', '/'], ['Manovre', '/manovre']])}
 <div class="eyebrow">Capitolo IV</div><h1>Le 8 manovre del reining</h1>
 <p class="lead">Sliding stop, backup, rollback, spin, circle, flying lead change, rundown e hesitate: per ciascuna la meccanica, gli aiuti, la progressione di addestramento e cosa guarda il giudice.</p>
-<div class="grid">${MAN.map(m => `<a class="card" href="/manovre/${m.k}">${MIMG[m.k] ? `<img src="/img/${MIMG[m.k][0]}.webp" alt="${esc(MIMG[m.k][1])}" width="${MIMG[m.k][2] ? 1264 : 1448}" height="${MIMG[m.k][2] ? 841 : 1086}" loading="lazy" decoding="async">` : ''}<b>${esc(m.it)}</b><span>${esc(m.en)}</span></a>`).join('')}</div>
+<div class="grid">${MAN.map(m => `<a class="card" href="/manovre/${m.k}">${MIMG[m.k] ? `<img src="/img/${MIMG[m.k][0]}.webp" alt="${esc(MIMG[m.k][1])}" width="${MIMG[m.k][2] ? MIMG[m.k][3] : 1448}" height="${MIMG[m.k][2] ? MIMG[m.k][4] : 1086}" loading="lazy" decoding="async">` : ''}<b>${esc(m.it)}</b><span>${esc(m.en)}</span></a>`).join('')}</div>
 <p><a class="cta p" href="/#man">Segna le manovre studiate nell'app</a></p>`;
   return layout({
     title: 'Le manovre del reining: stop, spin, rollback, lead change | Reiner\'s Book',
@@ -211,7 +211,7 @@ function pMan(k) {
   ];
   const body = `${crumbs([['Home', '/'], ['Manovre', '/manovre'], [m.it, url]])}
 <div class="eyebrow">${esc(m.en)}</div><h1>${esc(m.it)} nel reining</h1>
-${MIMG[k] ? (MIMG[k][2] ? real(MIMG[k][0], MIMG[k][1], 1264, 841) : fig(MIMG[k][0], MIMG[k][1])) : ''}
+${MIMG[k] ? (MIMG[k][2] ? real(MIMG[k][0], MIMG[k][1], MIMG[k][3], MIMG[k][4], MIMG[k][2]) : fig(MIMG[k][0], MIMG[k][1])) : ''}
 ${k === 'stop' ? vid('sliding-stop-laterale', '15-stop-laterale-poster', 'Cavallo palomino in sliding stop visto di lato, con sabbia sollevata e testa bassa') : ''}
 <h2>Meccanica</h2><p>${m.mech}</p>
 <h2>Aiuti</h2><ul>${m.aids.map(a => `<li>${a}</li>`).join('')}</ul>
