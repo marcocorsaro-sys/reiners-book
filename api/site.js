@@ -169,7 +169,7 @@ const MIMG = {
   circle: ['09a-circle', 'Cavaliera su cavallo baio in una curva ampia, con la traccia curva sulla sabbia'],
   spin: ['09b-spin', 'Cavallo baio in spin con gli anteriori incrociati, cavaliere con camicia blu'],
   roll: ['09c-rollback', 'Cavallo sauro in rollback con una nube di polvere dietro'],
-  stop: ['09d-sliding-stop', 'Cavallo sauro in sliding stop di profilo con posteriori bassi e polvere'],
+  stop: ['17-sliding-stop-sauro', 'Cavallo sauro in sliding stop di profilo, con il cavaliere in nero e sabbia sollevata', 'real'],
   lead: ['09e-lead-change', 'Cavaliera su cavallo baio in una fase sospesa del galoppo'],
   back: ['09f-back-up', 'Cavallo sauro con testa bassa che arretra con un passo corto'],
   run: ['09g-run-down', 'Cavallo sauro al galoppo in rettilineo con falcata ampia'],
@@ -186,7 +186,7 @@ function pManIndex() {
   const body = `${crumbs([['Home', '/'], ['Manovre', '/manovre']])}
 <div class="eyebrow">Capitolo IV</div><h1>Le 8 manovre del reining</h1>
 <p class="lead">Sliding stop, backup, rollback, spin, circle, flying lead change, rundown e hesitate: per ciascuna la meccanica, gli aiuti, la progressione di addestramento e cosa guarda il giudice.</p>
-<div class="grid">${MAN.map(m => `<a class="card" href="/manovre/${m.k}">${MIMG[m.k] ? `<img src="/img/${MIMG[m.k][0]}.webp" alt="${esc(MIMG[m.k][1])}" width="1448" height="1086" loading="lazy" decoding="async">` : ''}<b>${esc(m.it)}</b><span>${esc(m.en)}</span></a>`).join('')}</div>
+<div class="grid">${MAN.map(m => `<a class="card" href="/manovre/${m.k}">${MIMG[m.k] ? `<img src="/img/${MIMG[m.k][0]}.webp" alt="${esc(MIMG[m.k][1])}" width="${MIMG[m.k][2] ? 1264 : 1448}" height="${MIMG[m.k][2] ? 841 : 1086}" loading="lazy" decoding="async">` : ''}<b>${esc(m.it)}</b><span>${esc(m.en)}</span></a>`).join('')}</div>
 <p><a class="cta p" href="/#man">Segna le manovre studiate nell'app</a></p>`;
   return layout({
     title: 'Le manovre del reining: stop, spin, rollback, lead change | Reiner\'s Book',
@@ -211,7 +211,7 @@ function pMan(k) {
   ];
   const body = `${crumbs([['Home', '/'], ['Manovre', '/manovre'], [m.it, url]])}
 <div class="eyebrow">${esc(m.en)}</div><h1>${esc(m.it)} nel reining</h1>
-${MIMG[k] ? fig(MIMG[k][0], MIMG[k][1]) : ''}
+${MIMG[k] ? (MIMG[k][2] ? real(MIMG[k][0], MIMG[k][1], 1264, 841) : fig(MIMG[k][0], MIMG[k][1])) : ''}
 ${k === 'stop' ? vid('sliding-stop-laterale', '15-stop-laterale-poster', 'Cavallo palomino in sliding stop visto di lato, con sabbia sollevata e testa bassa') : ''}
 <h2>Meccanica</h2><p>${m.mech}</p>
 <h2>Aiuti</h2><ul>${m.aids.map(a => `<li>${a}</li>`).join('')}</ul>
