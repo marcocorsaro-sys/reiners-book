@@ -95,6 +95,7 @@ ${noindex ? '<meta name="robots" content="noindex,follow">' : '<meta name="robot
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>${CSS}</style>
 ${ld.map(jld).join('\n')}
+<script defer data-website-id="dfid_lJkzMNhFiMnPeqtjZNTcH" data-domain="reiningitalia.com" src="https://datafa.st/js/script.js"></script>
 </head><body>
 <header class="top"><div class="wrap"><a class="logo" href="/">Reiner's <em>Book</em></a><nav class="m">${nav}<a href="/">App</a></nav></div></header>
 <main><div class="wrap">${body}</div></main>
