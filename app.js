@@ -31,7 +31,7 @@ function save(){store.set('man',manDone);store.set('pat',patRead);store.set('bes
 /* ---------- nav ---------- */
 const nav=document.getElementById('nav');
 const VIEWS=['home','man','rein','pat','quiz','board','bit','score'];
-function show(v){document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));nav.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));window.scrollTo({top:0});try{history.replaceState(null,'','#'+v)}catch(e){}if(v==='board')renderBoard();if(v==='score')loadHist()}
+function show(v){document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));nav.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));window.scrollTo({top:0});try{history.replaceState(null,'','#'+v)}catch(e){}try{if(window.datafast&&document.readyState==='complete'&&window.__rbShown)window.datafast('app_view',{view:v})}catch(e){}window.__rbShown=1;if(v==='board')renderBoard();if(v==='score')loadHist()}
 nav.addEventListener('click',e=>{const b=e.target.closest('button');if(b)show(b.dataset.v)});
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
 const h0=(location.hash||'').slice(1);if(VIEWS.includes(h0))show(h0);
