@@ -43,6 +43,7 @@
     <div class="rider-horse" id="rider-horse">progressi solo su questo dispositivo</div>
     <button class="btn small" id="rider-btn">Accedi</button>
   </div>
+  <div class="legal"><a href="/privacy">Privacy</a> · <a href="/terms">Termini e disclaimer</a><br>Soluzione di <a href="https://77os.it/it" target="_blank" rel="noopener">77OS S.R.L.</a> · P.IVA 11689230966<br>Guida indipendente, non affiliata a NRHA, IRHA, OPES, ISHA o Fieracavalli.</div>
 </aside>
 
 <main>
@@ -188,7 +189,7 @@
     </div>
     <div>
       <h2 class="mt0">Parere da una foto</h2>
-      <p class="lead small">Fotografa il morso di profilo, su fondo chiaro, con un righello o una moneta accanto. Ricevi una lettura delle misure stimate e dei punti da controllare. È un parere orientativo: il giudizio finale è del giudice a fine run.</p>
+      <p class="lead small">Fotografa il morso di profilo, su fondo chiaro, con un righello o una moneta accanto. La foto viene inviata a un servizio di AI (Anthropic) per l'analisi e non viene conservata da noi: non includere persone riconoscibili. Ricevi una lettura delle misure stimate e dei punti da controllare. È un parere orientativo: il giudizio finale è del giudice a fine run.</p>
       <div class="photo-box">
         <input type="file" id="b-photo" accept="image/*" capture="environment" hidden>
         <button class="btn primary" id="b-shoot">Scatta / carica foto</button>
@@ -296,6 +297,7 @@
   <div class="tbl"><table id="board"><tr><th>#</th><th>Cavaliere</th><th>Cavallo</th><th>Quiz</th><th>Pattern</th><th>Manovre</th><th>Partite</th></tr></table></div>
   <div class="note" id="board-note"></div>
 </section>
+<footer class="spa-foot">Reiner's Book è una soluzione di <a href="https://77os.it/it" target="_blank" rel="noopener">77OS S.R.L.</a> · P.IVA 11689230966 · Via Andrea Solari 11, 20144 Milano · <a href="/privacy">Privacy</a> · <a href="/terms">Termini e disclaimer</a><br>Guida indipendente, non affiliata a NRHA, IRHA, OPES, ISHA, Fieracavalli o Veronafiere: fa fede il regolamento ufficiale. Foto e video su licenza; le illustrazioni generate con AI sono indicate come tali.</footer>
 </main>
 </div>
 
@@ -309,6 +311,7 @@
       <label>Nome <input id="l-name" required maxlength="40" autocomplete="username" placeholder="es. Marco"></label>
       <label>PIN <input id="l-pin" required inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="current-password" type="password" placeholder="4 cifre"></label>
       <label>Cavallo <input id="l-horse" maxlength="40" placeholder="opzionale"></label>
+      <p class="legal-note">Creando un profilo accetti i <a href="/terms" target="_blank">Termini</a> e l'<a href="/privacy" target="_blank">Informativa privacy</a> di 77OS S.R.L. Il nome compare nella Classifica: usa un soprannome.</p>
       <div class="err" id="l-err"></div>
       <div class="ctl"><button class="btn primary" type="submit">Entra</button><button class="btn" type="button" id="l-cancel">Annulla</button><button class="btn danger" type="button" id="l-logout" hidden>Esci</button></div>
     </form>

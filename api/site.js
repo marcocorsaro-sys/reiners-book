@@ -102,6 +102,7 @@ ${ld.map(jld).join('\n')}
 <footer><div class="wrap">
 <p><b>${NAME}</b> — guida indipendente al Reining in italiano: pattern NRHA 2026, manovre, giudizio, regole del morso e calendario gare. Non affiliato a NRHA, IRHA, OPES o ISHA: fa fede sempre il regolamento ufficiale in vigore.</p>
 <ul class="f"><li><a href="/calendario">Calendario gare di reining</a></li><li><a href="/pattern">I 20 pattern NRHA</a></li><li><a href="/manovre">Le 8 manovre del reining</a></li><li><a href="/giudizio">Come giudica il giudice</a></li><li><a href="/morso">Morso ammesso in gara?</a></li><li><a href="/fieracavalli-verona-2026">Reining a Fieracavalli Verona 2026</a></li><li><a href="/llms.txt">llms.txt</a></li></ul>
+<p>${NAME} è una soluzione di <a href="https://77os.it/it" rel="noopener">77OS S.R.L.</a> · P.IVA 11689230966 · Via Andrea Solari 11, 20144 Milano · <a href="/privacy">Privacy</a> · <a href="/terms">Termini e disclaimer</a>. Immagini: foto e video su licenza; le illustrazioni generate con AI sono indicate come tali.</p>
 </div></footer></body></html>`;
 }
 
@@ -350,7 +351,7 @@ async function sitemap() {
   try { ev = await events(); } catch (e) { }
   const u = (loc, lm, pr) => `<url><loc>${BASE}${loc}</loc>${lm ? `<lastmod>${lm}</lastmod>` : ''}${pr ? `<priority>${pr}</priority>` : ''}</url>`;
   const today = new Date().toISOString().slice(0, 10);
-  const urls = [u('/', today, '1.0'), u('/calendario', today, '0.9'), u('/pattern', '2026-09-30', '0.9'), u('/manovre', '2026-09-30', '0.9'), u('/giudizio', '2026-09-30', '0.8'), u('/morso', '2026-09-30', '0.8'), u('/fieracavalli-verona-2026', today, '0.9'), u('/fieracavalli-verona-2026/reining-special-event', today, '0.9'),
+  const urls = [u('/', today, '1.0'), u('/calendario', today, '0.9'), u('/pattern', '2026-09-30', '0.9'), u('/manovre', '2026-09-30', '0.9'), u('/giudizio', '2026-09-30', '0.8'), u('/morso', '2026-09-30', '0.8'), u('/privacy', '2026-11-08', '0.2'), u('/terms', '2026-11-08', '0.2'), u('/fieracavalli-verona-2026', today, '0.9'), u('/fieracavalli-verona-2026/reining-special-event', today, '0.9'),
     ...P.map(p => u('/pattern/' + p.id, '2026-09-30', '0.7')), ...MAN.map(m => u('/manovre/' + m.k, '2026-09-30', '0.7')),
     ...ev.filter(e => e.status !== 'cancelled').map(e => u('/calendario/' + evSlug(e), (e.updated_at || '').slice(0, 10), '0.5'))];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join('')}</urlset>`;
@@ -450,6 +451,72 @@ function fcIcs() {
   return L.join('\r\n') + '\r\n';
 }
 
+/* ---------- Pagine legali: titolare 77OS S.R.L. ---------- */
+const OWNER = '77OS S.R.L., Via Andrea Solari 11, 20144 Milano (MI), Italia, P.IVA e C.F. 11689230966 · REA MI-2619421';
+const LEGAL_UPD = '8 novembre 2026';
+const PRIVACY = [
+  ['1. Titolare del trattamento', [`${OWNER}. Sito: https://77os.it/it. Per qualsiasi richiesta sulla privacy scrivi a dev@77os.it (PEC: 77ossrl@legalmail.it).`]],
+  ['2. Quali dati raccogliamo', [
+    'Navigando senza account non ti chiediamo alcun dato: i progressi (manovre studiate, pattern letti, risultati del quiz) restano nel tuo browser (archiviazione locale) e non arrivano a noi.',
+    'Se crei un profilo "cavaliere": il nome o soprannome che scegli, un PIN di 4 cifre (conservato solo come impronta cifrata, mai in chiaro), il nome del cavallo (facoltativo), i progressi, i punteggi del quiz e le scorecard che salvi. Non chiediamo email, telefono né altri dati identificativi: ti consigliamo di usare un soprannome e di non riutilizzare un PIN che usi altrove.',
+    'Classifica: nome (o soprannome) e risultati migliori del quiz, con il numero di manovre e pattern completati, sono visibili agli altri utenti nella Classifica. Se non vuoi comparire, non creare il profilo.',
+    'Foto del morso (facoltativa): se usi "Parere da una foto", l\'immagine che carichi viene inviata a un servizio di intelligenza artificiale per generare il parere. Non la salviamo sui nostri server. Non caricare foto in cui compaiono persone riconoscibili.',
+    'Dati tecnici minimi: indirizzo IP, informazioni sul browser e log di accesso, usati per sicurezza e funzionamento, e statistiche di visita aggregate (vedi Cookie e statistiche).',
+    'Non raccogliamo dati di pagamento: il servizio è gratuito.']],
+  ['3. Finalità e base giuridica', [
+    'Erogare il servizio, salvare il tuo profilo e i tuoi progressi, mostrare la classifica (esecuzione del contratto, art. 6.1.b GDPR).',
+    'Sicurezza, prevenzione degli abusi, manutenzione tecnica e statistiche aggregate sull\'uso del sito (legittimo interesse, art. 6.1.f).',
+    'Analisi della foto del morso: solo se la carichi tu, sulla base del tuo consenso (art. 6.1.a), che dai scegliendo di inviarla.']],
+  ['4. Intelligenza artificiale', [
+    'Il parere sul morso è generato con un modello di intelligenza artificiale (Anthropic, Claude). Per generarlo inviamo al fornitore la foto e le opzioni che hai indicato (regolamento, tipo di morso, età del cavallo). Secondo i termini del fornitore per l\'uso via API, questi dati non vengono usati per addestrare i suoi modelli. Il parere è orientativo e può contenere errori: vedi i Termini di servizio.']],
+  ['5. Con chi condividiamo i dati (responsabili del trattamento)', [
+    'Supabase (database dei profili e dei progressi), Vercel (hosting del sito), Anthropic (parere sul morso, solo se usi la funzione), DataFast (statistiche di visita aggregate), Google Fonts (caratteri del sito, vedi Cookie e statistiche).',
+    'Non vendiamo i tuoi dati e non li usiamo per pubblicità. Alcuni fornitori sono fuori dallo Spazio Economico Europeo (per esempio negli Stati Uniti): il trasferimento avviene con le garanzie previste dal GDPR (clausole contrattuali standard o decisione di adeguatezza).']],
+  ['6. Conservazione', [
+    'Conserviamo i dati del profilo finché non chiedi di cancellarlo. Quando ci scrivi per eliminare il profilo cancelliamo o rendiamo anonimi i tuoi dati entro 30 giorni, salvo obblighi di legge. Le foto del morso non vengono conservate da noi. I dati salvati nel browser li puoi cancellare in qualsiasi momento dalle impostazioni del browser.']],
+  ['7. I tuoi diritti', [
+    'Puoi chiedere accesso, rettifica, cancellazione, limitazione, portabilità dei dati e opporti al trattamento, scrivendo a dev@77os.it. Puoi revocare il consenso in ogni momento. Hai inoltre diritto di proporre reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.it).']],
+  ['8. Cookie e statistiche', [
+    'Non usiamo cookie di profilazione né pubblicità. Il sito usa l\'archiviazione locale del browser per ricordare i tuoi progressi e, se hai un profilo, la sessione.',
+    'Misuriamo le visite in forma aggregata con DataFast, che può usare un identificativo anonimo di visitatore e di sessione (cookie o archiviazione del browser di prima parte) per contare pagine viste e provenienza; non usiamo questi dati per profilare le persone.',
+    'I caratteri del sito sono caricati dai server di Google (Google Fonts): in questo caso Google riceve il tuo indirizzo IP.']],
+  ['9. Minori', ['Il servizio è destinato a persone di almeno 16 anni.']],
+  ['10. Modifiche', ['Se cambiamo questa informativa pubblicheremo la nuova versione su questa pagina, aggiornando la data in alto.']]
+];
+const TERMS = [
+  ['1. Il servizio', [`${NAME} (${BASE}) è una guida indipendente al reining in italiano: pattern NRHA, manovre, criteri di giudizio, regole sul morso, calendario gare, quiz, scorecard e classifica. È un servizio di 77OS S.R.L.`]],
+  ['2. Gratuità e "così com\'è"', ['Il servizio è gratuito. Funzioni e contenuti possono cambiare o essere sospesi in qualsiasi momento. È fornito "così com\'è", senza garanzia di continuità o assenza di errori.']],
+  ['3. Non è il regolamento ufficiale', [
+    'I contenuti hanno scopo informativo e didattico. Sono una guida indipendente e non sostituiscono i regolamenti ufficiali (NRHA, IRHA, OPES, ISHA e quelli dell\'organizzatore) né il giudizio del giudice o del commissario di gara. Fa sempre fede il regolamento ufficiale in vigore: verificalo prima di una gara, soprattutto per pattern e imboccature.',
+    'I pattern vanno eseguiti come descritti nel testo ufficiale, non come disegnati nella guida: i disegni sono schematici.']],
+  ['4. Parere sul morso da foto e contenuti generati con AI', [
+    'Il parere da foto è generato con intelligenza artificiale, è solo orientativo, non è una verifica di conformità e può essere errato. Il controllo finale spetta al giudice o al commissario a fine run: misura sempre il morso con gli strumenti ufficiali.',
+    'Alcune immagini del sito sono illustrazioni generate con intelligenza artificiale e sono indicate come tali; le fotografie e i video reali sono utilizzati su licenza.']],
+  ['5. Calendario gare e dati sugli eventi', ['Date, sedi, orari e informazioni sulle gare derivano da fonti pubbliche e dagli organizzatori e possono cambiare o contenere errori. Verifica sempre con l\'organizzatore prima di iscriverti o partire. Il sito non gestisce iscrizioni né biglietti.']],
+  ['6. Equitazione e sicurezza', ['L\'equitazione è uno sport con rischi per persone e animali. I contenuti non sono istruzioni per l\'addestramento e non sostituiscono un istruttore o un tecnico qualificato né il parere del veterinario. Ogni scelta su cavallo, attrezzatura e allenamento è tua responsabilità.']],
+  ['7. Marchi e affiliazione', [
+    `${NAME} è un servizio indipendente di 77OS S.R.L. e non è affiliato, sponsorizzato né approvato da NRHA, IRHA, OPES, ISHA, Fieracavalli o Veronafiere. Nomi, sigle e marchi citati appartengono ai rispettivi proprietari e sono usati solo a scopo descrittivo. I pattern e i regolamenti sono citati come fonte e restano di proprietà dei rispettivi titolari.`]],
+  ['8. Il tuo profilo', ['Se crei un profilo devi custodire il tuo PIN: sei responsabile dell\'attività svolta con il tuo profilo. Il nome o soprannome che scegli compare nella Classifica: non usare nomi offensivi, di altre persone o dati personali non tuoi. Puoi chiedere la cancellazione del profilo in qualsiasi momento scrivendoci.']],
+  ['9. Uso consentito', ['Non puoi usare il servizio per scopi illeciti, tentare di accedere a dati altrui, aggirare i limiti tecnici, falsare la classifica, fare scraping massivo o rivendere i contenuti senza autorizzazione.']],
+  ['10. Proprietà intellettuale', ['Testi, software, disegni e marchio di Reiner\'s Book appartengono a 77OS S.R.L., salvo i materiali di terzi indicati. Ti concediamo un uso personale e non esclusivo del servizio. Le fotografie e i video sono usati su licenza e non sono riutilizzabili senza autorizzazione dei rispettivi titolari.']],
+  ['11. Limitazione di responsabilità', ['Nei limiti consentiti dalla legge, il titolare non risponde di danni indiretti, infortuni, squalifiche, penalità, mancati risultati sportivi o decisioni prese sulla base dei contenuti del servizio. Restano salvi i diritti inderogabili dei consumatori.']],
+  ['12. Modifiche', ['Possiamo aggiornare questi termini o il servizio; le modifiche rilevanti saranno comunicate sul sito. Puoi smettere di usare il servizio in ogni momento.']],
+  ['13. Legge applicabile', ['Questi termini sono regolati dalla legge italiana. Per i consumatori resta competente il foro di residenza o domicilio.']],
+  ['14. Contatti', [`${OWNER} · dev@77os.it · PEC 77ossrl@legalmail.it · https://77os.it/it`]]
+];
+function pLegal(kind) {
+  const priv = kind === 'privacy';
+  const secs = priv ? PRIVACY : TERMS;
+  const title = priv ? 'Informativa sulla privacy' : 'Termini di servizio e disclaimer';
+  const intro = priv
+    ? `${NAME} (${BASE}) è una soluzione di 77OS S.R.L. (https://77os.it): una guida indipendente al reining in italiano. Questa informativa spiega quali dati trattiamo, perché e quali diritti hai (Regolamento UE 2016/679, GDPR). Ultimo aggiornamento: ${LEGAL_UPD}.`
+    : `Usando ${NAME} (${BASE}) accetti questi termini. Ultimo aggiornamento: ${LEGAL_UPD}.`;
+  const body = `<h1>${title}</h1><p class="lead">${esc(intro)}</p>` +
+    secs.map(([h, ps]) => `<h2>${esc(h)}</h2>${ps.map(t => `<p>${esc(t)}</p>`).join('')}`).join('') +
+    `<p class="note">${NAME} è una soluzione di <a href="https://77os.it/it" rel="noopener">77OS</a> · 77OS S.R.L. · P.IVA 11689230966</p>`;
+  return layout({ title: `${title} | ${NAME}`, desc: `${title} di ${NAME}, soluzione di 77OS S.R.L.`, url: priv ? '/privacy' : '/terms', body, noindex: false });
+}
+
 module.exports = async (req, res) => {
   const p = String((req.query && req.query.p) || '').replace(/^\/+|\/+$/g, '');
   const [a, b] = p.split('/');
@@ -460,6 +527,7 @@ module.exports = async (req, res) => {
     else if (a === 'manovre') html = b ? pMan(b) : pManIndex();
     else if (a === 'giudizio') html = pRein();
     else if (a === 'fieracavalli-verona-2026') { if (!b) html = await pFiera(); else if (b === 'reining-special-event') html = pSpecial(); else if (b === 'reining-special-event.ics') { html = fcIcs(); type = 'text/calendar; charset=utf-8'; } cache = 'public, s-maxage=3600, stale-while-revalidate=86400'; }
+    else if (a === 'privacy' || a === 'terms') html = pLegal(a);
     else if (a === 'morso') html = pBit();
     else if (a === 'calendario') { html = b ? await pEvent(b) : await pCal(); cache = 'public, s-maxage=3600, stale-while-revalidate=86400'; }
     if (!html) { res.statusCode = 404; res.setHeader('Content-Type', 'text/html; charset=utf-8'); return res.end(layout({ title: 'Pagina non trovata | Reiner\'s Book', desc: 'Pagina non trovata', url: '/' + p, noindex: true, body: '<h1>Pagina non trovata</h1><p><a href="/">Torna alla home</a></p>' })); }
